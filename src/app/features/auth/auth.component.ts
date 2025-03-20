@@ -7,6 +7,7 @@ import gsap from 'gsap';
   standalone: true,
   imports: [
     ImageHandlerComponent
+    
   ],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
