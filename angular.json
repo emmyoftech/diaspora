@@ -73,10 +73,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "diaspora:build:production"
+              "buildTarget": "diaspora:build:production"
             },
             "development": {
-              "browserTarget": "diaspora:build:development"
+              "buildTarget": "diaspora:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "diaspora:build"
+            "buildTarget": "diaspora:build"
           }
         },
         "test": {

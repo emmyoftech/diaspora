@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { ImageHandlerComponent } from '../shared/image-handler/image-handler.component';
 import gsap from 'gsap';
 
