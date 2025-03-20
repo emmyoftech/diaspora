@@ -1,0 +1,21 @@
+// COLORS
+
+$primary: #02569B;
+
+$white: #FFFFFF;
+
+$black: #121212;
+
+$neutral: #717171;
+
+$other_pallet_white: #ECF2FF;
+
+$other_pallet_blue: #B4CFEF;
+
+// SIZES
+
+$small_number: 5px;
+
+$medium_number: $small_number * 2;
+
+$large_number: ($medium_number * 2) + $small_number;
