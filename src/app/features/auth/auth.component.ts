@@ -3,14 +3,12 @@ import { ImageHandlerComponent } from '../shared/image-handler/image-handler.com
 import gsap from 'gsap';
 
 @Component({
-  selector: 'app-auth',
-  standalone: true,
-  imports: [
-    ImageHandlerComponent
-    
-  ],
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+    selector: 'app-auth',
+    imports: [
+        ImageHandlerComponent
+    ],
+    templateUrl: './auth.component.html',
+    styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements AfterViewInit {
 
