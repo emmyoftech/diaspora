@@ -9,6 +9,7 @@
         flex: 1;
         min-width: 300px;
         overflow: hidden;
+    
         
         &.left{
             border-radius: $medium_number;
@@ -87,6 +88,14 @@
                     font-size: $medium_number * 2;
                     font-family: $font;
                 }
+            }
+        }
+
+        &.right{
+            display: flex;
+
+            .carousel{
+                flex: 1;
             }
         }
     }

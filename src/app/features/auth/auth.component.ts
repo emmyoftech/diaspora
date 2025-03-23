@@ -1,11 +1,14 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { ImageHandlerComponent } from '../shared/image-handler/image-handler.component';
+import { Component, AfterViewInit, ViewChild, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ImageHandlerComponent } from '../shared/components/image-handler/image-handler.component';
 import gsap from 'gsap';
+import { SwiperComponent } from '../shared/components/swiper/swiper.component';
 
 @Component({
     selector: 'app-auth',
+    standalone: true,
     imports: [
-        ImageHandlerComponent
+        ImageHandlerComponent,
+        SwiperComponent
     ],
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.scss']
@@ -29,6 +32,9 @@ export class AuthComponent implements AfterViewInit {
 
   @ViewChild('textTitle', {read: ElementRef, static: true})
   textTitle_ele_Ref!: ElementRef<HTMLElement>
+
+  @ViewChild('right', {read: ElementRef, static: false})
+  right_ele_Ref!: ElementRef<HTMLElement>
 
   ngAfterViewInit(): void {
     const timeline = gsap.timeline()
