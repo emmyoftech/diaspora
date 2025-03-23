@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ContentChild, ContentChildren, ElementRef, inject, Input, NO_ERRORS_SCHEMA, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, SimpleChanges, TemplateRef, viewChild, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ContentChild, ContentChildren, ElementRef, EmbeddedViewRef, inject, Input, NO_ERRORS_SCHEMA, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, SimpleChanges, TemplateRef, viewChild, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { observeResize } from 'src/app/functions/observe-resize.func';
 import { setSizeToMatch } from 'src/app/functions/set-size-to-match.func';
 import { SwiperContainer } from 'swiper/element';
 import { Swiper, SwiperOptions } from 'swiper/types';
+import SwiperSlideFeature from '../../interfaces/swiper-slide-feature.inter';
 
 @Component({
   selector: 'app-swiper',
@@ -15,40 +16,42 @@ import { Swiper, SwiperOptions } from 'swiper/types';
 
       @for (item of carouselContentChildren; track $index) {
         <ng-container>
-          <swiper-slide #swiperSlide>
-            <ng-container *ngTemplateOutlet="item"></ng-container>
+          <swiper-slide>
+            <ng-container #viewContainer></ng-container>
           </swiper-slide>
         </ng-container>
       }
 
-    </swiper-container>
-
+    </swiper-container> 
   `,
-  styleUrl: './swiper.component.scss',
+  styles: [''],
   schemas: [NO_ERRORS_SCHEMA]
 })
-export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class SwiperComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
   @Input()
   options?: SwiperOptions
 
   @ViewChild('swiper')
   private swiperComponent?: ElementRef<SwiperContainer>
 
-  @ContentChildren('slide')
-  carouselContentChildren!: QueryList<any>
-  
-  @ViewChildren("swiperSlide", {read: ElementRef})
-  swiperSlidesQueryRef?: QueryList<ElementRef<HTMLElement>>
+  @ContentChildren('slide', {descendants: true})
+  carouselContentChildren!: QueryList<TemplateRef<any>>
+
+  @ContentChildren('slideItem')
+  private xyz!: QueryList<SwiperSlideFeature>
+
+  @ViewChildren("viewContainer", {read: ViewContainerRef})
+  private viewContainerRefs!: QueryList<ViewContainerRef>
   
   private componentElement: HTMLElement = inject(ElementRef).nativeElement
 
   private render = inject(Renderer2)
 
-  private viewContainerRef = inject(ViewContainerRef)
-
   private initSubj = new Subject<void>()
 
   private initSubs?: Subscription
+
+  private SlidesWithItemFeature = new Map<number, SwiperSlideFeature>()
 
   initializeed = false
 
@@ -60,9 +63,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     })
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.renderSwiper()
-  }
+  ngOnChanges(changes: SimpleChanges): void {this.initSubj.next()}
 
   ngAfterViewInit(): void {    
     if(!this.swiperComponent) return
@@ -71,19 +72,30 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
     this.Swiper = this.swiperComponent.nativeElement.swiper
 
-    this.initializeed = true
+    this.viewContainerRefs.forEach((viewRef, index) => {
+      const templateRef = this.carouselContentChildren.get(index)
 
-    this.initSubj.next()
+      if(!templateRef) return
+      
+      const view: EmbeddedViewRef<SwiperSlideFeature> = viewRef.createEmbeddedView(templateRef)
 
-    this.swiperSlidesQueryRef?.forEach(slide => {
-      const {nativeElement} = slide
-      //@ts-ignore
-      this.handleCarouselItemDom(nativeElement.firstChild)
+      this.handleCarouselItemDom(view.rootNodes[0])
     })
-  } 
+  }
+
+  ngAfterContentInit(): void {
+    setTimeout(() => {
+      this.xyz.forEach((slide, index) => this.SlidesWithItemFeature.set(index, slide))
+      
+      this.initializeed = true
+
+      this.initSubj.next()
+    }, 10);
+  }
 
   private renderSwiper(){
     if(this.initializeed && this.Swiper && this.options){
+      this.handleSwiperSlideFeature()
       
       this.Swiper.params = this.options
 
@@ -106,7 +118,11 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   private handleCarouselItemDom(itemDom: HTMLElement){
-    this.render.setStyle(itemDom, "height", " 100")
+    this.render.setStyle(itemDom, "height", " 100%")
+  }
+
+  private handleSwiperSlideFeature(){
+
   }
 
   ngOnDestroy(): void {  
