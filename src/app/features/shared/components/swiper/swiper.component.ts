@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ContentChild, ContentChildren, ElementRef, inject, Input, NO_ERRORS_SCHEMA, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, SimpleChanges, TemplateRef, viewChild, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ContentChildren, ElementRef, inject, Input, NO_ERRORS_SCHEMA, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, SimpleChanges, TemplateRef, viewChild, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { observeResize } from 'src/app/functions/observe-resize.func';
 import { setSizeToMatch } from 'src/app/functions/set-size-to-match.func';
@@ -15,15 +15,14 @@ import { Swiper, SwiperOptions } from 'swiper/types';
 
       @for (item of carouselContentChildren; track $index) {
         <ng-container>
-          <swiper-slide>
-            <ng-container *ngTemplateOutlet="item.template">
-
-            </ng-container>
+          <swiper-slide #swiperSlide>
+            <ng-container *ngTemplateOutlet="item"></ng-container>
           </swiper-slide>
         </ng-container>
       }
 
     </swiper-container>
+
   `,
   styleUrl: './swiper.component.scss',
   schemas: [NO_ERRORS_SCHEMA]
@@ -38,9 +37,14 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   @ContentChildren('slide')
   carouselContentChildren!: QueryList<any>
   
+  @ViewChildren("swiperSlide", {read: ElementRef})
+  swiperSlidesQueryRef?: QueryList<ElementRef<HTMLElement>>
+  
   private componentElement: HTMLElement = inject(ElementRef).nativeElement
 
   private render = inject(Renderer2)
+
+  private viewContainerRef = inject(ViewContainerRef)
 
   private initSubj = new Subject<void>()
 
@@ -48,7 +52,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
   initializeed = false
 
-  swiper?: Swiper
+  Swiper?: Swiper
 
   ngOnInit(): void {
     this.initSubs = this.initSubj.subscribe(() => {
@@ -65,25 +69,29 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
     this.handleCarouselSize(this.swiperComponent.nativeElement)
 
-    this.swiper = this.swiperComponent.nativeElement.swiper
+    this.Swiper = this.swiperComponent.nativeElement.swiper
 
     this.initializeed = true
 
     this.initSubj.next()
-  }
+
+    this.swiperSlidesQueryRef?.forEach(slide => {
+      const {nativeElement} = slide
+      //@ts-ignore
+      this.handleCarouselItemDom(nativeElement.firstChild)
+    })
+  } 
 
   private renderSwiper(){
-    if(this.initializeed && this.swiper && this.options){
+    if(this.initializeed && this.Swiper && this.options){
       
-      this.swiper.params = this.options
+      this.Swiper.params = this.options
 
-      this.swiper.update()
+      this.Swiper.update()
     }
   }
 
   private handleCarouselSize (carouelDom: HTMLElement) {
-    setSizeToMatch(this.componentElement, carouelDom)
-
     this.render.setStyle(this.componentElement, "position", "relative")
 
     this.render.setStyle(carouelDom, "position", "absolute")
@@ -91,8 +99,14 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     this.render.setStyle(carouelDom, "inset", "0")
 
     this.render.setStyle(carouelDom, "border", "solid 1px")
+
+    setSizeToMatch(this.componentElement, carouelDom)
     
-    observeResize(carouelDom, () => setSizeToMatch(this.componentElement, carouelDom))
+    observeResize(this.componentElement, () => setSizeToMatch(this.componentElement, carouelDom))
+  }
+
+  private handleCarouselItemDom(itemDom: HTMLElement){
+    this.render.setStyle(itemDom, "height", " 100")
   }
 
   ngOnDestroy(): void {  

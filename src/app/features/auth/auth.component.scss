@@ -5,13 +5,12 @@
     display: flex;
     padding: $small_number;
 
-    section{
+    .left, .right{
         flex: 1;
-        min-width: 300px;
-        overflow: hidden;
     
-        
         &.left{
+            min-width: 300px;
+            overflow: hidden;
             border-radius: $medium_number;
             background: $other_pallet_blue;
             position: relative;
@@ -92,11 +91,7 @@
         }
 
         &.right{
-            display: flex;
-
-            .carousel{
-                flex: 1;
-            }
+            display: block;
         }
     }
 }

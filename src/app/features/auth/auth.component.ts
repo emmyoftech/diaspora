@@ -33,9 +33,6 @@ export class AuthComponent implements AfterViewInit {
   @ViewChild('textTitle', {read: ElementRef, static: true})
   textTitle_ele_Ref!: ElementRef<HTMLElement>
 
-  @ViewChild('right', {read: ElementRef, static: false})
-  right_ele_Ref!: ElementRef<HTMLElement>
-
   ngAfterViewInit(): void {
     const timeline = gsap.timeline()
 
