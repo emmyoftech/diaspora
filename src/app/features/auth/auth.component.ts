@@ -1,19 +1,29 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { ImageHandlerComponent } from '../shared/components/image-handler/image-handler.component';
 import gsap from 'gsap';
-import { SwiperComponent } from '../shared/components/swiper/swiper.component';
 import { LogInComponent } from "./components/log-in/log-in.component";
 import { SignUpComponent } from "./components/sign-up/sign-up.component";
+import { RouterModule } from '@angular/router';
+import { AUTH_SWIPER_CAROUSEL_CONFIGURATION } from './config/auth-swiper-settings.config';
+import { JQuerySlickOptions, SlickCarouselComponent } from 'ngx-slick-carousel';
+import { NGXCarouselComponent } from '../shared/components/ngx-carousel/ngx-carousel.component';
 
 @Component({
     selector: 'app-auth',
     standalone: true,
+    providers: [
+      {
+        provide: AUTH_SWIPER_CAROUSEL_CONFIGURATION.token,
+        useValue: AUTH_SWIPER_CAROUSEL_CONFIGURATION.data
+      }
+    ],
     imports: [
-    ImageHandlerComponent,
-    SwiperComponent,
-    LogInComponent,
-    SignUpComponent
-],
+      ImageHandlerComponent,
+      LogInComponent,
+      SignUpComponent,
+      RouterModule,
+      NGXCarouselComponent
+    ],
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.scss']
 })
@@ -37,7 +47,22 @@ export class AuthComponent implements AfterViewInit {
   @ViewChild('textTitle', {read: ElementRef, static: true})
   textTitle_ele_Ref!: ElementRef<HTMLElement>
 
+  @ViewChild(NGXCarouselComponent)
+  carouselComponent?: NGXCarouselComponent
+
+  private carousel?: SlickCarouselComponent 
+
+  constructor(
+    @Inject(AUTH_SWIPER_CAROUSEL_CONFIGURATION.token) public carousel_options: JQuerySlickOptions
+  ){}
+
   ngAfterViewInit(): void {
+    this.animate()
+
+    this.carousel = this.carouselComponent?.ngx_carousel
+  }
+
+  private animate (){
     const timeline = gsap.timeline()
 
     timeline.set(this.white_ele_Ref.nativeElement, {opacity: 0})
@@ -64,5 +89,13 @@ export class AuthComponent implements AfterViewInit {
     timeline.to(this.textTitle_ele_Ref.nativeElement, {opacity: 1, duration: 1})
 
     timeline.to(this.text_ele_Ref.nativeElement, {opacity: 1, y: 0, duration: 1}, "-=.5")
+  }
+
+  toSignUp(){
+    this.carousel?.slickGoTo(1)
+  }
+
+  toLogin(){
+    this.carousel?.slickGoTo(0)
   }
 }

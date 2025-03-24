@@ -1,0 +1,14 @@
+@import "/src/assets/partial-styles/variables";
+
+:host{
+    display: block;
+    position: relative;
+    padding: $small_number;
+    box-shadow: 0px 0px $small_number transparentize($color: $black, $amount: .2);
+    width: max-content;
+    height: max-content;
+
+    & > div{
+        position: absolute;
+    }
+}

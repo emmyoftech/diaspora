@@ -1,0 +1,79 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    display: flex;
+    padding: $medium_number;
+
+    app-ngx-carousel{
+        flex: 1;
+
+        .main-login{
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            gap: $medium_number;
+            
+            & > * {
+                max-width: 500px;
+            }
+
+            h3{
+                font-family: $font;
+                font-size: $large_number;
+            }
+
+            p{
+                color: $neutral;
+                font-family: $font;
+                text-align: center;
+                font-size: $prefered_font_size;
+            }
+
+            & > div{
+                width: 100%;
+            }
+
+            .social-signIn{
+                display: inherit;
+                justify-content: space-between;
+                gap: $large_number;
+
+                button{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: transparent;
+                    border-radius: $small_number;
+                    box-shadow: 0px 0px $small_number transparentize($color: $black, $amount: .7);
+                    border: none;
+                    padding: $small_number;
+                    gap: $small_number;
+                    flex: 1;
+
+                    app-image-handler{
+                        width: $large_number;
+                    }
+
+                    p{
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            .or{
+                display: flex;
+                align-items: center;
+                gap: $medium_number; 
+                height: $large_number * 2;
+
+                hr{
+                    flex: 1;
+                    height: 1px;
+                    background-color: $neutral;
+                }
+            }
+        }
+    }
+}

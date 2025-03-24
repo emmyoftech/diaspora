@@ -1,7 +1,13 @@
-export function setSizeToMatch(referenceElement: HTMLElement, target: HTMLElement) {
+type Option = {
+    ignoreWidth?: boolean,
+    ignoreHeight?: boolean
+}
+export function setSizeToMatch(referenceElement: HTMLElement, target: HTMLElement, opt?: Option) {
     const {clientWidth, clientHeight} = referenceElement
 
-    target.style.width = (clientWidth - 10) + "px"
+    if(!opt?.ignoreWidth)
+        target.style.width = clientWidth + "px"
 
-    target.style.height = (clientHeight - 10) + "px"
+    if(!opt?.ignoreHeight)
+        target.style.height = clientHeight + "px"
 }

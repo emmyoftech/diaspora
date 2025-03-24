@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, output } from '@angular/core';
 import SwiperSlideFeature from 'src/app/features/shared/interfaces/swiper-slide-feature.inter';
+import { NGXCarouselComponent } from "../../../shared/components/ngx-carousel/ngx-carousel.component";
+import { JQuerySlickOptions } from 'ngx-slick-carousel';
+import { ImageHandlerComponent } from "../../../shared/components/image-handler/image-handler.component";
+import { InputTextFieldDecoratorComponent } from "../../../shared/components/input-text-field-decorator/input-text-field-decorator.component";
 
 @Component({
   selector: 'app-log-in',
-  imports: [],
+  imports: [NGXCarouselComponent, ImageHandlerComponent, InputTextFieldDecoratorComponent],
   templateUrl: './log-in.component.html',
   styleUrl: './log-in.component.scss'
 })
 export class LogInComponent implements SwiperSlideFeature {
-  D = "not ready"
-  
-  onNotVisible() {
-    console.log("Babby is not ready " + this.D)
-  }
+  @Output("switch")
+  private switchEmitter: EventEmitter<void> = new EventEmitter()
+
+  isVisible?: boolean | undefined;
+ 
 }

@@ -1,1 +1,50 @@
-<p>log-in works!</p>
+<app-ngx-carousel [options]="{
+    draggable: false,
+    swipe: false    
+}">
+    <ng-template #ngxSlideItem>
+
+        <section #ngxSlideInst class="main-login">
+
+            <h3>Welcome back</h3>
+
+            <p>Sign in to manage your properties, and track your investments from anywhere in the world</p>
+
+            <div class="social-signIn">
+                <button>
+                    <app-image-handler src="assets/images/google-logo.png"></app-image-handler>
+                    <p>Sign in with Google</p>
+                </button>
+
+                <button>
+                    <app-image-handler src="assets/images/facebook-logo.png"></app-image-handler>
+                    <p>Sign in with Facebook</p>
+                </button>
+            </div>
+
+            <div class="or">
+                <hr>
+                <p>OR</p>
+                <hr>
+            </div>
+
+            <form>
+                <div>
+                    <app-input-text-field-decorator [width]="450">
+                        <input type="text" #textField placeholder="Enter Email">
+                    </app-input-text-field-decorator>
+                    <p>error message</p>
+                </div>
+
+                <div>
+                    <app-input-text-field-decorator [width]="450">
+                        <input type="text" #textField placeholder="Enter Password">
+                    </app-input-text-field-decorator>
+                    <p>error message</p>
+                </div>
+            </form>
+        </section>
+
+    </ng-template>
+
+</app-ngx-carousel>

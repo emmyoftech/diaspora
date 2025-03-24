@@ -5,6 +5,16 @@
     display: flex;
     padding: $small_number;
 
+    .logo{
+        position: absolute;
+        width: 120px;
+        height: 40px;
+        top: $medium_number * 2;
+        left: $medium_number * 3;
+        z-index: 2;
+        cursor: pointer;
+    }
+
     .left, .right{
         flex: 1;
     

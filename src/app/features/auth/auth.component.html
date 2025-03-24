@@ -1,3 +1,7 @@
+<div class="logo" routerLink="/">
+    <app-image-handler src="assets/images/logo.png"></app-image-handler>
+</div>
+
 <section class="left">
 
     <span #white></span>
@@ -20,16 +24,17 @@
     
 </section>
 
-<app-swiper class="right">
-    <ng-template #slideTempRef>
+<app-ngx-carousel class="right" [options]="carousel_options">
+    <ng-template #ngxSlideItem>
         
-        <app-log-in #slideItemInst></app-log-in>
+        <app-log-in #ngxSlideInst (switch)="toSignUp()"></app-log-in>
         
     </ng-template>
     
-    <ng-template #slideTempRef>
+    <ng-template #ngxSlideItem>
         
-        <app-sign-up #slideItemInst></app-sign-up>
+        <app-sign-up #ngxSlideInst (switch)="toLogin()"></app-sign-up>
 
     </ng-template>
-</app-swiper>
+
+</app-ngx-carousel>

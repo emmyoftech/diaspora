@@ -1,0 +1,165 @@
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ContentChildren, ElementRef, inject, Input, NO_ERRORS_SCHEMA, OnDestroy, QueryList, Renderer2, TemplateRef, viewChild, ViewChild, viewChildren, ViewChildren, ViewContainerRef } from '@angular/core';
+import { JQuerySlickOptions, SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
+import SwiperSlideFeature from '../../interfaces/swiper-slide-feature.inter';
+import { setSizeToMatch } from 'src/app/functions/set-size-to-match.func';
+import { observeResize } from 'src/app/functions/observe-resize.func';
+import { Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-ngx-carousel',
+  imports: [
+    CommonModule,
+    SlickCarouselModule
+  ],
+  template: `
+
+    <ngx-slick-carousel #carousel [config]="options">
+
+      @for (item of ngxSlideItems; track $index) {
+        <ng-container>
+
+          <ngx-slide #ngxSlideContainer>
+
+            <ng-container #ngxSlideViewContainerRef></ng-container>
+
+          </ngx-slide>
+
+        </ng-container>
+      }
+
+    </ngx-slick-carousel>
+  `,
+  styleUrl: './ngx-carousel.component.scss',
+  schemas: [NO_ERRORS_SCHEMA]
+})
+export class NGXCarouselComponent implements AfterViewInit, OnDestroy {
+  @Input()
+  options!: JQuerySlickOptions
+
+  @ViewChild('carousel')
+  ngx_carousel!: SlickCarouselComponent
+
+  @ViewChild('carousel', {read: ElementRef})
+  private ngx_carousel_DOM!: ElementRef<HTMLElement>
+
+  @ViewChildren('ngxSlideViewContainerRef', {read: ViewContainerRef})
+  private ngxSlideViewContainerRefs!: QueryList<ViewContainerRef>
+
+  @ViewChildren('ngxSlideContainer', {read: ElementRef})
+  private ngxSlideContainerRefs!: QueryList<ElementRef<HTMLElement>>
+
+  @ContentChildren('ngxSlideItem')
+  ngxSlideItems!: QueryList<TemplateRef<any>>
+
+  @ContentChildren('ngxSlideInst')
+  private ngxSlideInstances!: QueryList<SwiperSlideFeature | ElementRef>
+
+  private componentElement: HTMLElement = inject(ElementRef).nativeElement
+
+  private SlidesWithItemFeature = new Map<number, SwiperSlideFeature & {_hostNode?: HTMLElement}>()
+
+  private afterChangeSubs?: Subscription
+
+  private render = inject(Renderer2)
+
+  ngAfterViewInit(): void {
+    
+    for (let i = 0; i < this.ngxSlideViewContainerRefs.length; i++) {
+      const viewRef = this.ngxSlideViewContainerRefs.get(i),
+
+      templateRef = this.ngxSlideItems.get(i)
+
+      if(!viewRef) throw Error("Failed to find view reference of " + i)
+      
+      if(!templateRef) throw Error("Failed to find template reference of " + i)
+      
+      const view = viewRef.createEmbeddedView(templateRef)
+
+      this.SlidesWithItemFeature.set(i, {_hostNode: view.rootNodes[0]})
+    }
+
+    setTimeout(() => {
+      for (let j = 0; j < this.ngxSlideInstances.length; j++) {
+        const instance = this.ngxSlideInstances.get(j);
+  
+        if((instance as ElementRef).nativeElement) return
+
+        let storedNode = this.SlidesWithItemFeature.get(j)
+
+        if(!storedNode) throw Error("SlideItem cannot be less than or more than Slideinstance")
+
+        const {_hostNode} = storedNode;
+
+        storedNode = (instance as SwiperSlideFeature)
+
+        storedNode._hostNode = _hostNode
+
+        this.SlidesWithItemFeature.delete(j)
+
+        this.SlidesWithItemFeature.set(j, storedNode)
+      }
+
+      this.handleSlideChange(0)
+    }, 100);
+
+    this.handleCarouselSize()
+  
+    this.ngxSlideContainerRefs.forEach(container => this.handleSlideContainers(container.nativeElement))
+    
+    //@ts-ignore
+    this.afterChangeSubs = this.ngx_carousel.afterChange
+    .subscribe(event => this.handleSlideChange(event.currentSlide))
+
+    this.ngx_carousel.initSlick()
+  }
+
+
+  private handleCarouselSize(){
+    setSizeToMatch(this.componentElement, this.ngx_carousel_DOM.nativeElement)
+
+    observeResize(this.componentElement, () => setSizeToMatch(this.componentElement, this.ngx_carousel_DOM.nativeElement))
+  }
+
+  private handleSlideContainers(dom: HTMLElement){
+    setSizeToMatch(this.ngx_carousel_DOM.nativeElement, dom, {ignoreWidth: true})
+    
+    this.render.setStyle(dom.firstChild, "flex", "1")
+
+    observeResize(this.ngx_carousel_DOM.nativeElement, () => setSizeToMatch(this.ngx_carousel_DOM.nativeElement, dom, {ignoreWidth: true}))
+  }
+
+  private handleSlideChange(currentIndex: number){
+    this.SlidesWithItemFeature.forEach((value, key) => {
+      if(key == currentIndex){
+        value.isVisible = true
+
+        this.hideOrShowContainer(key, "show")
+
+        if(value.onVisible) value.onVisible()
+      }else{
+        value.isVisible = false
+
+        this.hideOrShowContainer(key, "hide")
+
+        if(value.onNotVisible) value.onNotVisible()
+      }
+    })
+  }
+
+  private hideOrShowContainer(index: number, action: "show" | "hide"){
+    const container = this.ngxSlideContainerRefs.get(index)
+
+    if(!container) throw Error("could not find container of " + index)
+
+    const {nativeElement} = container
+
+    this.render.setStyle(nativeElement, "opacity", action == 'hide' ? 0 : 1)
+    
+    this.render.setStyle(nativeElement, "pointer-events", action == 'hide' ? "none" : "all")
+  }
+
+  ngOnDestroy(): void {
+    this.afterChangeSubs?.unsubscribe() 
+  }
+}

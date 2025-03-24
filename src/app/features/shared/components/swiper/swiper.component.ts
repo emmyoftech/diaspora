@@ -11,7 +11,7 @@ import SwiperSlideFeature from '../../interfaces/swiper-slide-feature.inter';
   selector: 'app-swiper',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
   ] ,
   template: `
     <swiper-container #swiper>
@@ -57,7 +57,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
   initializeed = false
 
-  Swiper?: Swiper
+  swiper?: Swiper
 
   ngOnInit(): void {
     this.initSubs = this.initSubj.subscribe(() => {
@@ -70,7 +70,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   ngAfterViewInit(): void {
     if(!this.swiperComponent) return
 
-    this.Swiper = this.swiperComponent.nativeElement.swiper
+    this.swiper = this.swiperComponent.nativeElement.swiper
 
     this.handleCarouselSize(this.swiperComponent.nativeElement)
 
@@ -115,8 +115,8 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
       if(this.slideInstancesRefs.length !== this.slideChildrenTemplateRefs.length)
         throw Error("template count must match intance Count")
-
-        console.log(this.SlidesWithItemFeature)
+      
+        this.runVisiblityFeature(0, "visible") // run Visibilty Feaure for first slide
 
         this.initializeed = true
 
@@ -125,16 +125,13 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   private renderSwiper(){
-    if(this.initializeed && this.Swiper && this.options){
+    if(this.initializeed && this.swiper && this.options)
+      this.swiper.params = {
+        ...this.swiper.params,
+        ...this.options
+      }
 
-      this.Swiper.params = this.options
-
-      this.Swiper.update()
-
-      // run Visibilty Feaure for first slide
-
-      this.runVisiblityFeature(0, "visible")
-    }
+      console.log(this.swiper?.params)
   }
 
   private handleCarouselSize (carouelDom: HTMLElement) {
@@ -170,7 +167,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   }
 
   private handleSwiperSlideFeature(){
-    this.Swiper?.on("slideChange", sw => {
+    this.swiper?.on("slideChange", sw => {
       const {activeIndex} = sw
 
       this.SlidesWithItemFeature

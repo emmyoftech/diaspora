@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import SwiperSlideFeature from 'src/app/features/shared/interfaces/swiper-slide-feature.inter';
 
 @Component({
@@ -8,8 +8,8 @@ import SwiperSlideFeature from 'src/app/features/shared/interfaces/swiper-slide-
   styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent implements SwiperSlideFeature {
-
-  onVisible(){
-    console.log("i am visible sign in")
-  };
+  isVisible?: boolean | undefined;
+  
+  @Output("switch")
+  private switchEmitter: EventEmitter<void> = new EventEmitter()
 }
