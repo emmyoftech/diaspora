@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, AfterViewInit, Component, ContentChild, ContentChildren, ElementRef, EmbeddedViewRef, inject, Input, NO_ERRORS_SCHEMA, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, SimpleChanges, TemplateRef, viewChild, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, ElementRef, EmbeddedViewRef, inject, Input, NO_ERRORS_SCHEMA, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, SimpleChanges, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { observeResize } from 'src/app/functions/observe-resize.func';
 import { setSizeToMatch } from 'src/app/functions/set-size-to-match.func';
@@ -10,11 +10,13 @@ import SwiperSlideFeature from '../../interfaces/swiper-slide-feature.inter';
 @Component({
   selector: 'app-swiper',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule
+  ] ,
   template: `
     <swiper-container #swiper>
 
-      @for (item of carouselContentChildren; track $index) {
+      @for (item of slideChildrenTemplateRefs; track $index) {
         <ng-container>
           <swiper-slide>
             <ng-container #viewContainer></ng-container>
@@ -27,18 +29,18 @@ import SwiperSlideFeature from '../../interfaces/swiper-slide-feature.inter';
   styles: [''],
   schemas: [NO_ERRORS_SCHEMA]
 })
-export class SwiperComponent implements OnInit, AfterViewInit, AfterContentInit, OnChanges, OnDestroy {
+export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input()
   options?: SwiperOptions
 
   @ViewChild('swiper')
   private swiperComponent?: ElementRef<SwiperContainer>
 
-  @ContentChildren('slide', {descendants: true})
-  carouselContentChildren!: QueryList<TemplateRef<any>>
+  @ContentChildren('slideTempRef', {descendants: true})
+  slideChildrenTemplateRefs!: QueryList<TemplateRef<any>>
 
-  @ContentChildren('slideItem')
-  private xyz!: QueryList<SwiperSlideFeature>
+  @ContentChildren('slideItemInst')
+  private slideInstancesRefs!: QueryList<SwiperSlideFeature | ElementRef<HTMLElement>>
 
   @ViewChildren("viewContainer", {read: ViewContainerRef})
   private viewContainerRefs!: QueryList<ViewContainerRef>
@@ -51,7 +53,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, AfterContentInit,
 
   private initSubs?: Subscription
 
-  private SlidesWithItemFeature = new Map<number, SwiperSlideFeature>()
+  private SlidesWithItemFeature = new Map<number, SwiperSlideFeature & {_hostNode?: HTMLElement}>()
 
   initializeed = false
 
@@ -65,41 +67,73 @@ export class SwiperComponent implements OnInit, AfterViewInit, AfterContentInit,
 
   ngOnChanges(changes: SimpleChanges): void {this.initSubj.next()}
 
-  ngAfterViewInit(): void {    
+  ngAfterViewInit(): void {
     if(!this.swiperComponent) return
-
-    this.handleCarouselSize(this.swiperComponent.nativeElement)
 
     this.Swiper = this.swiperComponent.nativeElement.swiper
 
-    this.viewContainerRefs.forEach((viewRef, index) => {
-      const templateRef = this.carouselContentChildren.get(index)
+    this.handleCarouselSize(this.swiperComponent.nativeElement)
 
-      if(!templateRef) return
+    this.handleSwiperSlideFeature()
+
+    for (let i = 0; i < this.viewContainerRefs.length; i++) {
+      const viewRef = this.viewContainerRefs.get(i),
       
-      const view: EmbeddedViewRef<SwiperSlideFeature> = viewRef.createEmbeddedView(templateRef)
+      templateRef = this.slideChildrenTemplateRefs.get(i)
 
-      this.handleCarouselItemDom(view.rootNodes[0])
-    })
-  }
+      if(!templateRef || !viewRef) return
+      
+      const view: EmbeddedViewRef<SwiperSlideFeature> = viewRef.createEmbeddedView(templateRef),
 
-  ngAfterContentInit(): void {
+      hostView = view.rootNodes[0]
+
+      this.handleCarouselItemDom(hostView, i)
+
+      this.SlidesWithItemFeature.set(i, {_hostNode: hostView})
+    }
+
     setTimeout(() => {
-      this.xyz.forEach((slide, index) => this.SlidesWithItemFeature.set(index, slide))
-      
-      this.initializeed = true
+      for (let i = 0; i < this.slideInstancesRefs.length; i++) {
+        const instance = this.slideInstancesRefs.get(i);
+       
+        //@ts-ignore
+        if(!instance?.nativeElement){
+          let slide_feature = this.SlidesWithItemFeature.get(i)
 
-      this.initSubj.next()
+          if(!slide_feature) throw Error("can,t find instance key data")
+
+          //@ts-ignore
+          slide_feature = instance
+          //@ts-ignore
+          slide_feature._hostNode = this.SlidesWithItemFeature.get(i)?._hostNode
+
+          this.SlidesWithItemFeature.delete(i)
+          //@ts-ignore
+          this.SlidesWithItemFeature.set(i, slide_feature)
+        }
+      }
+
+      if(this.slideInstancesRefs.length !== this.slideChildrenTemplateRefs.length)
+        throw Error("template count must match intance Count")
+
+        console.log(this.SlidesWithItemFeature)
+
+        this.initializeed = true
+
+        this.initSubj.next()
     }, 10);
   }
 
   private renderSwiper(){
     if(this.initializeed && this.Swiper && this.options){
-      this.handleSwiperSlideFeature()
-      
+
       this.Swiper.params = this.options
 
       this.Swiper.update()
+
+      // run Visibilty Feaure for first slide
+
+      this.runVisiblityFeature(0, "visible")
     }
   }
 
@@ -117,12 +151,54 @@ export class SwiperComponent implements OnInit, AfterViewInit, AfterContentInit,
     observeResize(this.componentElement, () => setSizeToMatch(this.componentElement, carouelDom))
   }
 
-  private handleCarouselItemDom(itemDom: HTMLElement){
+  private handleCarouselItemDom(itemDom: HTMLElement, index: number){
     this.render.setStyle(itemDom, "height", " 100%")
+
+    if(index > 0) this.hideOrShowElement(itemDom, "hide")
+  }
+
+  private hideOrShowElement(dom: HTMLElement, action: "show" | "hide"){
+    if(action == "hide"){
+      this.render.setStyle(dom, "opacity", 0)
+
+      this.render.setStyle(dom, "pointer-events", "none")
+    } else{
+      this.render.setStyle(dom, "opacity", 1)
+
+      this.render.setStyle(dom, "pointer-events", "all")
+    }
   }
 
   private handleSwiperSlideFeature(){
+    this.Swiper?.on("slideChange", sw => {
+      const {activeIndex} = sw
 
+      this.SlidesWithItemFeature
+      .forEach((value, key) => this.runVisiblityFeature(key, key == activeIndex ? 'visible' : 'not-visible'))
+   
+    })  
+  }
+
+  private runVisiblityFeature(index: number, action: "visible" | "not-visible"){
+    const feature = this.SlidesWithItemFeature.get(index)
+
+    if(!feature) throw Error("Unknown")
+
+      if(action == "visible"){
+      //@ts-ignore
+      this.hideOrShowElement(feature._hostNode, "show")
+
+      feature.isVisible = true
+
+      if(feature.onVisible) feature.onVisible()
+    } else {
+        //@ts-ignore
+        this.hideOrShowElement(feature._hostNode, "hide")
+
+        feature.isVisible = false
+        
+        if(feature.onNotVisible) feature.onNotVisible()
+    }
   }
 
   ngOnDestroy(): void {  

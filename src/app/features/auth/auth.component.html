@@ -21,11 +21,15 @@
 </section>
 
 <app-swiper class="right">
-    <ng-template #slide>
-        <app-image-handler #slideItem #image class="imageHold" src="assets/images/property-images/propery-1.jpeg"></app-image-handler>
-    </ng-template>    
+    <ng-template #slideTempRef>
+        
+        <app-log-in #slideItemInst></app-log-in>
+        
+    </ng-template>
+    
+    <ng-template #slideTempRef>
+        
+        <app-sign-up #slideItemInst></app-sign-up>
 
-    <ng-template #slide>
-        <app-image-handler #slideItem #image class="imageHold" src="assets/images/property-images/propery-1.jpeg"></app-image-handler>
-    </ng-template>    
+    </ng-template>
 </app-swiper>

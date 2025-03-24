@@ -2,14 +2,18 @@ import { Component, AfterViewInit, ViewChild, ElementRef, NO_ERRORS_SCHEMA } fro
 import { ImageHandlerComponent } from '../shared/components/image-handler/image-handler.component';
 import gsap from 'gsap';
 import { SwiperComponent } from '../shared/components/swiper/swiper.component';
+import { LogInComponent } from "./components/log-in/log-in.component";
+import { SignUpComponent } from "./components/sign-up/sign-up.component";
 
 @Component({
     selector: 'app-auth',
     standalone: true,
     imports: [
-        ImageHandlerComponent,
-        SwiperComponent
-    ],
+    ImageHandlerComponent,
+    SwiperComponent,
+    LogInComponent,
+    SignUpComponent
+],
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.scss']
 })
