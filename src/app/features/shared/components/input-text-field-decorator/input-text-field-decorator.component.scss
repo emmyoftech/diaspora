@@ -1,14 +1,57 @@
 @import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/fonts-varibles";
 
 :host{
-    display: block;
+    display: flex;
     position: relative;
-    padding: $small_number;
-    box-shadow: 0px 0px $small_number transparentize($color: $black, $amount: .2);
-    width: max-content;
-    height: max-content;
+    border: solid $neutral 1px;
+    border-radius: $small_number;
+    padding-left: $medium_number;
+
+    &.err{
+        border: solid 2px $err-red;
+        animation: vibrate .1s linear 5;
+
+        & > div{
+            color: $err-red;
+        }
+
+        @keyframes vibrate {
+            from{
+                transform: translateX(-$medium_number);
+            }
+
+            to{
+                transform: translateX($medium_number);
+            }
+        }
+    }
 
     & > div{
         position: absolute;
+        background-color: $white;
+        padding: $small_number;
+        top: clamp(3px, 50%, $large_number);
+        transform: translateY(-50%);
+        left: $medium_number;
+        font-family: $font;
+        color: $neutral;
+        font-size: $prefered_font_size;
+        pointer-events: none;
+        transition: .3s ease;
+        display: grid;
+        place-items: center;
+        height: clamp(25px, 90%, 30px);
+
+        &.onFocus{
+            top: -$medium_number - 5;
+            left: -$small_number;
+            transform: scale(.6);
+        }
+    }
+
+    & > app-icon{
+        width: $large_number + $medium_number;
+        cursor: pointer;
     }
 }

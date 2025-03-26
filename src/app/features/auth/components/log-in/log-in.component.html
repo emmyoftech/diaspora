@@ -1,6 +1,7 @@
 <app-ngx-carousel [options]="{
     draggable: false,
-    swipe: false    
+    swipe: false,
+    initialSlide: 1
 }">
     <ng-template #ngxSlideItem>
 
@@ -28,23 +29,85 @@
                 <hr>
             </div>
 
-            <form>
-                <div>
-                    <app-input-text-field-decorator [width]="450">
-                        <input type="text" #textField placeholder="Enter Email">
+            <app-slide-message [message]="error_message"></app-slide-message>
+
+            <form #form="ngForm" (ngSubmit)="login()">
+                <label>
+                    <app-input-text-field-decorator [error]="(email_model_field.errors?.['required'] || email_model_field.errors?.['inalidEmailFormaat']) && email_model_field.dirty">
+                        <input 
+                            type="email" 
+                            name="email"
+                            #textField 
+                            #email_model_field="ngModel"
+                            appEmailFormatValidator
+                            placeholder="Enter Email" 
+                            [(ngModel)]="creds.email"
+                            [ngModelOptions]="{updateOn: 'change'}"
+                            required
+                        >
                     </app-input-text-field-decorator>
-                    <p>error message</p>
+                    <p *ngIf="email_model_field.errors?.['required'] && email_model_field.dirty" class="input-err-msg">This field cannot be empty</p>
+                    
+                    <p *ngIf="email_model_field.errors?.['inalidEmailFormaat']" class="input-err-msg">&#64; is required</p>                    
+                </label>
+
+                <label>
+                    <app-input-text-field-decorator [error]="password_model_field.errors && password_model_field.dirty">
+                        <input 
+                            type="password" 
+                            name="password"
+                            #textField 
+                            #password_model_field="ngModel" 
+                            placeholder="Enter Password" 
+                            [(ngModel)]="creds.password"
+                            required
+                        >
+                    </app-input-text-field-decorator>
+                    <p *ngIf="password_model_field.dirty && password_model_field.errors?.['required']" class="input-err-msg">
+                        this field cannot be empty
+                    </p>
+                </label>
+
+                
+                <div class="extras">
+                    <div>
+                        <label>
+                            <input type="checkbox">
+                        </label>
+
+                        <p>Remember me</p>
+                    </div>
+
+                    <b (click)="toForgotPassword()">Forgot password?</b>
                 </div>
 
-                <div>
-                    <app-input-text-field-decorator [width]="450">
-                        <input type="text" #textField placeholder="Enter Password">
-                    </app-input-text-field-decorator>
-                    <p>error message</p>
-                </div>
+                <app-button-loaders class="btn-load" [loadObvs]="loadObvs">
+                    <input 
+                        type="submit" 
+                        value="Sign in" 
+                        #loadTarget 
+                        [disabled]="form.invalid" 
+                        [ngClass]="{disabled: form.invalid}"
+                    >
+                </app-button-loaders>
+
+                <p class="to-sign-up">Don't have an account? <b (click)="toSignUp()">Sign Up</b></p>
             </form>
         </section>
 
     </ng-template>
 
+    <ng-template #ngxSlideItem>
+
+        <app-forgot-passord #ngxSlideInst [credentials]="creds" (toOtp)="toOTP()" (toSignIn)="toStart()"></app-forgot-passord>
+
+    </ng-template>
+
+    <ng-template #ngxSlideItem>
+
+        <app-login-otp-verification #ngxSlideInst>
+
+        </app-login-otp-verification>
+    </ng-template>
+    
 </app-ngx-carousel>

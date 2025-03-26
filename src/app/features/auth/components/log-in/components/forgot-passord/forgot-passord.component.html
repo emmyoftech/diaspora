@@ -1,0 +1,39 @@
+<h3>Forgot Password</h3>
+
+<p>Sign in to manage your properties, and track your investments from anywhere in the world</p>
+
+<app-slide-message [message]="error_message"></app-slide-message>
+
+<form #form="ngForm" (ngSubmit)="toOtp()">
+
+    <label>
+        <app-input-text-field-decorator [error]="(fp_email_model_field.errors?.['required'] || fp_email_model_field.errors?.['inalidEmailFormaat']) && fp_email_model_field.dirty">
+            <input 
+                type="email" 
+                name="email"
+                #textField 
+                #fp_email_model_field="ngModel"
+                appEmailFormatValidator
+                placeholder="Enter Email" 
+                [(ngModel)]="credentials.email"
+                [ngModelOptions]="{updateOn: 'change'}"
+                required
+            >
+        </app-input-text-field-decorator>
+        <p *ngIf="fp_email_model_field.errors?.['required'] && fp_email_model_field.dirty" class="input-err-msg">This field cannot be empty</p>
+        
+        <p *ngIf="fp_email_model_field.errors?.['inalidEmailFormaat']" class="input-err-msg">&#64; is required</p>                    
+    </label>
+
+    <app-button-loaders class="btn-load" loadText="verifying email" [loadObvs]="loadObvs">
+        <input 
+        type="submit" 
+        value="Submit" 
+        #loadTarget 
+        [disabled]="form.invalid"
+        [ngClass]="{disabled: form.invalid}"
+    >
+    </app-button-loaders>
+
+    <p class="to-sign-in">Remeber pasword? <b (click)="toSignIn()">Sign In</b></p>
+</form>

@@ -16,7 +16,7 @@
             gap: $medium_number;
             
             & > * {
-                max-width: 500px;
+                max-width: 400px;
             }
 
             h3{
@@ -24,14 +24,14 @@
                 font-size: $large_number;
             }
 
-            p{
+            & > p, .social-signIn p, .or p, .to-sign-up{
                 color: $neutral;
                 font-family: $font;
                 text-align: center;
                 font-size: $prefered_font_size;
             }
 
-            & > div{
+            & > div, form{
                 width: 100%;
             }
 
@@ -42,7 +42,7 @@
 
                 button{
                     display: flex;
-                    align-items: center;
+                    align-items: center; 
                     justify-content: center;
                     background-color: transparent;
                     border-radius: $small_number;
@@ -72,6 +72,70 @@
                     flex: 1;
                     height: 1px;
                     background-color: $neutral;
+                }
+            }
+
+            form{
+                display: flex;
+                flex-flow: column;
+                gap: $large_number;
+
+                & > label{
+                    display: flex;
+                    flex-flow: column;
+                    gap: $medium_number;
+                    height: max-content;
+
+                    app-input-text-field-decorator {
+                       height: 45px;
+                    }
+                }
+
+                .extras{
+                    display: flex;
+                    justify-content: space-between;
+                    font-family: $font;
+                    font-size: $prefered_font_size;
+    
+                    div {
+                        display: flex;
+                        align-items: center;
+                        gap: $medium_number;
+                    }
+    
+                    b{
+                        color: $primary;
+                        cursor: pointer;
+                    }
+                }
+
+                .btn-load{
+                    margin: 0 auto;
+                    width: 90%;
+                    height: 35px;
+                    border-radius: $large_number;
+
+                    input{
+                        background-color: $primary;
+                        color: $white;
+                        border: none;
+                        outline: none;
+                        cursor: pointer;
+                        transition: .3s;
+
+                        &:hover{
+                            background-color: $white;
+                            border: solid 1px $primary;
+                            color: $primary;
+                        }
+                    }
+                }
+
+                .to-sign-up{
+                    b{
+                        color: $primary;
+                        cursor: pointer;
+                    }
                 }
             }
         }

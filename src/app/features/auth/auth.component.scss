@@ -2,7 +2,9 @@
 @import '/src/assets/partial-styles/fonts-varibles';
 
 :host{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 30px;
     padding: $small_number;
 
     .logo{
@@ -11,97 +13,117 @@
         height: 40px;
         top: $medium_number * 2;
         left: $medium_number * 3;
+        border: none;
+        outline: none;
         z-index: 2;
         cursor: pointer;
     }
 
-    .left, .right{
-        flex: 1;
-    
-        &.left{
-            min-width: 300px;
-            overflow: hidden;
-            border-radius: $medium_number;
-            background: $other_pallet_blue;
+    .left{
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+        min-width: 300px;
+        overflow: hidden;
+        border-radius: $medium_number;
+        background: $other_pallet_blue;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        container-type: size;
+
+        & > * {
             position: relative;
+            z-index: 2;
+        }
+
+        span {
+            display: block;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            content: '';
+            width: clamp(150px, 100%, 700px);
+            height: clamp(150px, 100%, 700px);
+            left: -30%;
+            border-radius: 50%;
+            background: radial-gradient(circle closest-side at center, $white, $other_pallet_blue);
+            z-index: 1;
+        }
+
+        & > div{
             display: flex;
-            justify-content: center;
+            width: clamp(150px, 50%, 250px);
+            height: clamP(200px, 50%, 300px);
+            margin-top: clamp(80px, 20%, 500px);
 
             & > * {
-                position: relative;
-                z-index: 2;
-            }
-
-            span {
-                display: block;
                 position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                content: '';
-                width: clamp(150px, 100%, 700px);
-                height: clamp(150px, 100%, 700px);
-                left: -30%;
-                border-radius: 50%;
-                background: radial-gradient(circle closest-side at center, $white, $other_pallet_blue);
-                z-index: 1;
+                width: 100%;
             }
 
+            .fade1, .fade2, .imageHold{
+                height: 100%;
+                border-radius: 50% 50% $small_number $small_number;
+            }
+
+            .fade1{
+                background-color: transparentize($color: $white, $amount: .8);
+                top: -10%;
+                left: 10%;
+            }
+
+            .fade2{
+                background-color: transparentize($color: $white, $amount: .7);
+            }
+
+            .imageHold{
+                top: 10%;
+                left: -10%;
+            }
+
+            .text-holder, .text-title-holder{
+                width: 130%;
+                max-width: 400px;
+            }
+
+            .text-holder{
+                top: 145%;
+                font-family: $font;
+                left: 10%;
+            }
+
+            .text-title-holder{
+                height: max-content;
+                padding: $medium_number;
+                border-radius: $medium_number;
+                background-color: $white;
+                top: 100%;
+                font-size: $medium_number * 2;
+                font-family: $font;
+            }
+        }
+
+        @container (max-height: 650px){
             & > div{
-                display: flex;
-                width: clamp(150px, 50%, 250px);
-                height: clamP(200px, 50%, 300px);
-                margin-top: 8%;
-
-                & > * {
-                    position: absolute;
-                    width: 100%;
-                }
-
-                .fade1, .fade2, .imageHold{
-                    height: 100%;
-                    border-radius: 50% 50% $small_number $small_number;
-                }
-
-                .fade1{
-                    background-color: transparentize($color: $white, $amount: .8);
-                    top: -10%;
-                    left: 10%;
-                }
-
-                .fade2{
-                    background-color: transparentize($color: $white, $amount: .7);
-                }
-
-                .imageHold{
-                    top: 10%;
-                    left: -10%;
-                }
-
-                .text-holder, .text-title-holder{
-                    width: 130%;
-                    max-width: 400px;
-                }
-
                 .text-holder{
-                    top: 145%;
-                    font-family: $font;
-                    left: 10%;
-                }
-
-                .text-title-holder{
-                    height: max-content;
-                    padding: $medium_number;
-                    border-radius: $medium_number;
-                    background-color: $white;
-                    top: 100%;
-                    font-size: $medium_number * 2;
-                    font-family: $font;
+                    visibility: hidden;
                 }
             }
         }
+    }
 
-        &.right{
-            display: block;
-        }
+    .right{
+        grid-column: 2 / -1;
+        grid-row: 1 / 2;
+        display: block;
+    }
+
+    & > p {
+        grid-row: 2 / -1;
+        grid-column: 2 / -1;
+        text-align: center;
+        font-family: $font;
+        color: $neutral;
+        font-size: $prefered_font_size;        
     }
 }

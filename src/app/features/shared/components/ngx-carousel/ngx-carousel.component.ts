@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ContentChildren, ElementRef, inject, Input, NO_ERRORS_SCHEMA, OnDestroy, QueryList, Renderer2, TemplateRef, viewChild, ViewChild, viewChildren, ViewChildren, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, inject, Input, NO_ERRORS_SCHEMA, OnDestroy, QueryList, Renderer2, TemplateRef, viewChild, ViewChild, viewChildren, ViewChildren, ViewContainerRef } from '@angular/core';
 import { JQuerySlickOptions, SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
-import SwiperSlideFeature from '../../interfaces/swiper-slide-feature.inter';
 import { setSizeToMatch } from 'src/app/functions/set-size-to-match.func';
 import { observeResize } from 'src/app/functions/observe-resize.func';
 import { Subscription } from 'rxjs';
+import CarouselSlideFeature from '../../interfaces/carousel-slide-feature.inter';
 
 @Component({
   selector: 'app-ngx-carousel',
@@ -33,7 +33,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './ngx-carousel.component.scss',
   schemas: [NO_ERRORS_SCHEMA]
 })
-export class NGXCarouselComponent implements AfterViewInit, OnDestroy {
+export class NGXCarouselComponent implements AfterViewInit, AfterContentInit, OnDestroy {
   @Input()
   options!: JQuerySlickOptions
 
@@ -53,11 +53,11 @@ export class NGXCarouselComponent implements AfterViewInit, OnDestroy {
   ngxSlideItems!: QueryList<TemplateRef<any>>
 
   @ContentChildren('ngxSlideInst')
-  private ngxSlideInstances!: QueryList<SwiperSlideFeature | ElementRef>
+  private ngxSlideInstances!: QueryList<CarouselSlideFeature | ElementRef>
 
   private componentElement: HTMLElement = inject(ElementRef).nativeElement
 
-  private SlidesWithItemFeature = new Map<number, SwiperSlideFeature & {_hostNode?: HTMLElement}>()
+  private SlidesWithItemFeature = new Map<number, CarouselSlideFeature & {_hostNode?: HTMLElement}>()
 
   private afterChangeSubs?: Subscription
 
@@ -79,30 +79,6 @@ export class NGXCarouselComponent implements AfterViewInit, OnDestroy {
       this.SlidesWithItemFeature.set(i, {_hostNode: view.rootNodes[0]})
     }
 
-    setTimeout(() => {
-      for (let j = 0; j < this.ngxSlideInstances.length; j++) {
-        const instance = this.ngxSlideInstances.get(j);
-  
-        if((instance as ElementRef).nativeElement) return
-
-        let storedNode = this.SlidesWithItemFeature.get(j)
-
-        if(!storedNode) throw Error("SlideItem cannot be less than or more than Slideinstance")
-
-        const {_hostNode} = storedNode;
-
-        storedNode = (instance as SwiperSlideFeature)
-
-        storedNode._hostNode = _hostNode
-
-        this.SlidesWithItemFeature.delete(j)
-
-        this.SlidesWithItemFeature.set(j, storedNode)
-      }
-
-      this.handleSlideChange(0)
-    }, 100);
-
     this.handleCarouselSize()
   
     this.ngxSlideContainerRefs.forEach(container => this.handleSlideContainers(container.nativeElement))
@@ -114,6 +90,31 @@ export class NGXCarouselComponent implements AfterViewInit, OnDestroy {
     this.ngx_carousel.initSlick()
   }
 
+  ngAfterContentInit(): void {
+      setTimeout(() => {
+        for (let j = 0; j < this.ngxSlideInstances.length; j++) {
+          const instance = this.ngxSlideInstances.get(j);
+    
+          if((instance as ElementRef).nativeElement) continue
+  
+          let storedNode = this.SlidesWithItemFeature.get(j)
+  
+          if(!storedNode) throw Error("SlideItem cannot be less than or more than Slideinstance")
+  
+          const {_hostNode} = storedNode;
+  
+          storedNode = (instance as CarouselSlideFeature)
+  
+          storedNode._hostNode = _hostNode
+  
+          this.SlidesWithItemFeature.delete(j)
+  
+          this.SlidesWithItemFeature.set(j, storedNode)
+        }
+  
+        this.handleSlideChange(this.options.initialSlide ?? 0)
+      }, 100);
+  }
 
   private handleCarouselSize(){
     setSizeToMatch(this.componentElement, this.ngx_carousel_DOM.nativeElement)
@@ -126,7 +127,7 @@ export class NGXCarouselComponent implements AfterViewInit, OnDestroy {
     
     this.render.setStyle(dom.firstChild, "flex", "1")
 
-    observeResize(this.ngx_carousel_DOM.nativeElement, () => setSizeToMatch(this.ngx_carousel_DOM.nativeElement, dom, {ignoreWidth: true}))
+    observeResize(this.ngx_carousel_DOM.nativeElement, () => setSizeToMatch(this.ngx_carousel_DOM.nativeElement, dom))
   }
 
   private handleSlideChange(currentIndex: number){
@@ -153,10 +154,10 @@ export class NGXCarouselComponent implements AfterViewInit, OnDestroy {
     if(!container) throw Error("could not find container of " + index)
 
     const {nativeElement} = container
-
-    this.render.setStyle(nativeElement, "opacity", action == 'hide' ? 0 : 1)
     
     this.render.setStyle(nativeElement, "pointer-events", action == 'hide' ? "none" : "all")
+    
+    this.render.setStyle(nativeElement, "visibility", action == 'hide' ? "hidden" : "visible")
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,31 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/fonts-varibles";
+
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+input{
+  
+  &::-ms-reveal,
+  &::-webkit-reveal {
+    display: none;
+  }
+
+  &.disabled{
+    pointer-events: none;
+    opacity: .5;
+  }
+}
+
+.input-err-msg{
+  color: $err-red;
+  font-family: $font;
+  font-size: $medium_number;
+
+  &::first-letter{
+    text-transform: uppercase;
+  }
 }

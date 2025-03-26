@@ -1,4 +1,4 @@
-export default interface SwiperSlideFeature {
+export default interface CarouselSlideFeature {
     isVisible?:  boolean,
 
     onVisible?: () => void,

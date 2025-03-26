@@ -1,0 +1,19 @@
+:host{
+    display: flex;
+    overflow: hidden;
+    position: relative;
+
+    load-plate{
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        pointer-events: none;
+        transition: .3s;
+
+        &.loading{
+            opacity: 1;
+        }
+    }
+}

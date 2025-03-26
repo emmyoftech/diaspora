@@ -5,7 +5,7 @@ import { observeResize } from 'src/app/functions/observe-resize.func';
 import { setSizeToMatch } from 'src/app/functions/set-size-to-match.func';
 import { SwiperContainer } from 'swiper/element';
 import { Swiper, SwiperOptions } from 'swiper/types';
-import SwiperSlideFeature from '../../interfaces/swiper-slide-feature.inter';
+import CarouselSlideFeature from '../../interfaces/carousel-slide-feature.inter';
 
 @Component({
   selector: 'app-swiper',
@@ -40,7 +40,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
   slideChildrenTemplateRefs!: QueryList<TemplateRef<any>>
 
   @ContentChildren('slideItemInst')
-  private slideInstancesRefs!: QueryList<SwiperSlideFeature | ElementRef<HTMLElement>>
+  private slideInstancesRefs!: QueryList<CarouselSlideFeature | ElementRef<HTMLElement>>
 
   @ViewChildren("viewContainer", {read: ViewContainerRef})
   private viewContainerRefs!: QueryList<ViewContainerRef>
@@ -53,7 +53,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
   private initSubs?: Subscription
 
-  private SlidesWithItemFeature = new Map<number, SwiperSlideFeature & {_hostNode?: HTMLElement}>()
+  private SlidesWithItemFeature = new Map<number, CarouselSlideFeature & {_hostNode?: HTMLElement}>()
 
   initializeed = false
 
@@ -74,7 +74,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
     this.handleCarouselSize(this.swiperComponent.nativeElement)
 
-    this.handleSwiperSlideFeature()
+    this.handleCarouselSlideFeature()
 
     for (let i = 0; i < this.viewContainerRefs.length; i++) {
       const viewRef = this.viewContainerRefs.get(i),
@@ -83,7 +83,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
       if(!templateRef || !viewRef) return
       
-      const view: EmbeddedViewRef<SwiperSlideFeature> = viewRef.createEmbeddedView(templateRef),
+      const view: EmbeddedViewRef<CarouselSlideFeature> = viewRef.createEmbeddedView(templateRef),
 
       hostView = view.rootNodes[0]
 
@@ -166,7 +166,7 @@ export class SwiperComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     }
   }
 
-  private handleSwiperSlideFeature(){
+  private handleCarouselSlideFeature(){
     this.swiper?.on("slideChange", sw => {
       const {activeIndex} = sw
 

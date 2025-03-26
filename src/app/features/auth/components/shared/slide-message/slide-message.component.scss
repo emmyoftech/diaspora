@@ -1,0 +1,34 @@
+@import "/src/assets/partial-styles/fonts-varibles";
+@import "/src/assets/partial-styles/variables";
+
+:host{
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: .3s;
+    max-height: 150px;
+
+    p{
+        overflow: hidden;
+        font-family: $font;
+        font-size: $prefered_font_size;
+        text-align: center;
+        box-shadow: 3px 3px 0px $primary;
+        border-radius: $small_number;
+        border: $primary solid 1px;
+        color: $primary;
+        padding: $small_number;
+        opacity: 0;
+        
+        &::first-letter{
+            text-transform: uppercase;
+        }
+    }
+
+    &.active{
+        grid-template-rows: 1fr;
+
+        p{
+            opacity: 1;
+        }
+    }
+}
