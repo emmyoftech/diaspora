@@ -14,19 +14,18 @@
             justify-content: center;
             align-items: center;
             gap: $medium_number;
+            font-family: $font;
             
             & > * {
                 max-width: 400px;
             }
 
             h3{
-                font-family: $font;
                 font-size: $large_number;
             }
 
             & > p, .social-signIn p, .or p, .to-sign-up{
                 color: $neutral;
-                font-family: $font;
                 text-align: center;
                 font-size: $prefered_font_size;
             }

@@ -12,7 +12,7 @@ import { AuthApiCallService } from 'src/app/api-integration/endpoint-services/au
 import { Router } from '@angular/router';
 import { SlideMessageComponent } from 'src/app/features/auth/components/shared/slide-message/slide-message.component';
 import { ForgotPassordComponent } from './components/forgot-passord/forgot-passord.component';
-import { LoginOTPVerificationComponent } from './components/forgot-passord/login-otp-verification/login-otp-verification.component';
+import { LoginOTPVerificationComponent } from './components/login-otp-verification/login-otp-verification.component';
 
 @Component({
   selector: 'app-log-in',
@@ -74,11 +74,15 @@ export class LogInComponent {
     this.switchEmitter.emit()
   }
 
+  toForgotPassword(){
+    this.carousel?.ngx_carousel.slickGoTo(1)
+  }
+
   toOTP(){
     this.carousel?.ngx_carousel.slickGoTo(2)
   }
 
-  toForgotPassword(){
-    this.carousel?.ngx_carousel.slickGoTo(1)
+  toPasswordReset(){
+    this.carousel?.ngx_carousel.slickGoTo(3)
   }
 }

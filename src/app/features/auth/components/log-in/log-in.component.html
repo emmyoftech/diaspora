@@ -1,7 +1,7 @@
 <app-ngx-carousel [options]="{
     draggable: false,
     swipe: false,
-    initialSlide: 1
+    initialSlide: 2
 }">
     <ng-template #ngxSlideItem>
 
@@ -98,16 +98,11 @@
     </ng-template>
 
     <ng-template #ngxSlideItem>
-
         <app-forgot-passord #ngxSlideInst [credentials]="creds" (toOtp)="toOTP()" (toSignIn)="toStart()"></app-forgot-passord>
-
     </ng-template>
 
     <ng-template #ngxSlideItem>
-
-        <app-login-otp-verification #ngxSlideInst>
-
-        </app-login-otp-verification>
+        <app-login-otp-verification #ngxSlideInst [credentials]="creds" (toForgotPassword)="toForgotPassword()" (toPasswordReset)="toPasswordReset()"></app-login-otp-verification>
     </ng-template>
     
 </app-ngx-carousel>

@@ -16,5 +16,5 @@ export class AuthApiCallService {
 
   login_user = (cred: LoginCredentials, opt?: HttpCallOptions) => this.httpService.httpCall(["auth", 'login'], undefined, opt).post(cred)
 
-  verify_email = (email: string, opt?: HttpCallOptions) => this.httpService.httpCall<ApiResponseObject>(["auth", "init_forgot_password"]).post({email})
+  verify_email = (email: string, opt?: HttpCallOptions) => this.httpService.httpCall<ApiResponseObject>(["auth", "init_forgot_password"], opt).post({email})
 }

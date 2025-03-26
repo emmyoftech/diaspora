@@ -57,6 +57,9 @@ export class ForgotPassordComponent implements CarouselSlideFeature {
           this.error_message = `failed to verify email: ${this.credentials.email}`
 
           //TODO: Make sure to remove when api is okay
+
+          this.credentials.otp = "456446"
+          
           setTimeout(() => {
             this.switchToOTPEmitter.emit()
           }, 2000);

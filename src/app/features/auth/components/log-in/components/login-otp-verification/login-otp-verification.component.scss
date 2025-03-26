@@ -1,0 +1,40 @@
+ @import "/src/assets/partial-styles/variables";
+ @import "/src/assets/partial-styles/fonts-varibles";
+
+ :host{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    font-family: $font;
+    gap: $large_number;
+
+    & > * {
+        max-width: 400px;
+    }
+
+    p{
+        color: $neutral;
+        text-align: center;
+        font-size: $prefered_font_size;
+    }
+
+    button{
+        margin: 0 auto;
+        width: 90%;
+        height: 35px;
+        border-radius: $large_number;
+        background-color: $primary;
+        color: $white;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        transition: .3s;
+
+        &:hover{
+            background-color: $white;
+            border: solid 1px $primary;
+            color: $primary;
+        }
+    }
+ }

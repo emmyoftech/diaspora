@@ -1,0 +1,20 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    display: flex;
+    gap: $medium_number;
+
+    div{
+        border: solid 2px $primary;
+        border-radius: $small_number;
+        overflow: hidden;
+
+        input{
+            pointer-events: none;
+            border: none;
+            outline: none;
+            font-family: $font;
+        }
+    }
+}
