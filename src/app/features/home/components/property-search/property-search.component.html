@@ -1,0 +1,30 @@
+<ul>
+    <li class="active">
+        <app-icon name="house"></app-icon>
+        <p>Sale</p>
+    </li>
+    <li>
+        <app-icon name="house"></app-icon>
+        <p>Rent</p>
+    </li>
+    <li>
+        <app-icon name="house"></app-icon>
+        <p>Shortlet</p>
+    </li>
+</ul>
+
+<section>
+    <ul>
+        @for (item of searchparadigmsEntries; track $index) {
+            <li>
+                <p>{{item[0]}}</p>
+                <app-select-dropdown [drops]="item[1]"></app-select-dropdown>            
+            </li>
+        }
+    </ul>
+
+    <button>
+        <app-icon name="magnifying-glass"></app-icon>
+        <p>Search</p>
+    </button>
+</section>

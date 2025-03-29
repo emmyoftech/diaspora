@@ -19,7 +19,7 @@ import { AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, HostListen
           }" 
           [type]="inputType ?? 'number'" 
           (input)="onInput($event, $index)"
-          (keyup)="onKeyUp($event, $index)"
+          (keydown)="onKeyDown($event, $index)"
           #input
         >
       </div>
@@ -45,6 +45,8 @@ export class BoxedInputComponent implements OnChanges, DoCheck, AfterViewInit {
 
   @HostListener("click")
   private click(){
+
+    if(this.valueEmitted) return
     
     for (let i = 0; i < this.inputElementRefs.length; i++) {
       const ref = this.inputElementRefs.get(i);
@@ -61,12 +63,17 @@ export class BoxedInputComponent implements OnChanges, DoCheck, AfterViewInit {
     }
 
     this.setFocus(this.inputElementRefs.last.nativeElement)
-
   }
 
   inputArrays: any[] = []
 
   private value = ""
+
+  private valueEmitted = false
+
+  private get inputElementArray () {
+    return this.inputElementRefs.map(ref => ref.nativeElement)
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.inputArrays = new Array(this.inputCount ?? 4).fill(null)
@@ -76,41 +83,43 @@ export class BoxedInputComponent implements OnChanges, DoCheck, AfterViewInit {
     this.size = this.size ?? 30
   }
 
-  ngAfterViewInit(): void {
-    this.setFocus(this.inputElementRefs.first.nativeElement)
-  }
+  ngAfterViewInit(): void {}
 
   onInput(ev: Event, index: number){
     try {
-      this.value += (ev.target as HTMLInputElement).value
+      const nextElementindex = index + 1,
 
-      const nextField = this.inputElementRefs.get(index + 1)
+      {value} = ev.target as HTMLInputElement
 
-      if(!nextField) throw Error()
+      if(value == "" || !value) return
 
-      this.setFocus(nextField.nativeElement)
+      this.value += value
+
+      this.setFocus(this.inputElementArray[nextElementindex])
+
     } catch {
-      this.boxedResultEmmitter.next(this.value)
-
       this.blurAll()
+
+      this.boxedResultEmmitter.emit(this.value)
+
+      this.valueEmitted = true
     }
   }
 
-  onKeyUp(ev: KeyboardEvent, index: number){
-    try {
-      const {key} = ev,
+  onKeyDown (ev: Event, index: number){
+    const {key} = ev as KeyboardEvent
 
-      {value} = ev.target as HTMLInputElement,
+    if(key.toLowerCase() == "backspace") {
 
-      previousInputField = this.inputElementRefs.get(index - 1)
+      try {
+        this.setFocus(this.inputElementArray[index -1])
+        
+        this.value = this.value.slice(0, index - 1)
+      } catch {
 
-      if(key.toLowerCase() != "backspace") return
-  
-      if(value || !previousInputField) return
-
-      this.setFocus(previousInputField.nativeElement)
-
-    } catch{}
+        this.value = ""
+      } 
+    }
   }
 
   reset(){
@@ -120,6 +129,8 @@ export class BoxedInputComponent implements OnChanges, DoCheck, AfterViewInit {
       this.setFocus(this.inputElementRefs.first.nativeElement)
     })
     this.value = ""
+
+    this.valueEmitted = false
   }
 
   private blurAll(){

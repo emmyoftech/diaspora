@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { LoginCredentials } from 'src/app/api-integration/endpoint-services/auth/auth-api-types.type';
 import { BoxedInputComponent } from "../../../../../shared/components/boxed-input/boxed-input.component";
 
@@ -19,6 +19,9 @@ export class LoginOTPVerificationComponent {
 
   @Output("toPasswordReset")
   private toPasswordResetEmitter: EventEmitter<void> = new EventEmitter()
+
+  @ViewChild(BoxedInputComponent)
+  boxedInput?: BoxedInputComponent  
 
   onBoxedInputOuput(value: string){
     console.log(value)

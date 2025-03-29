@@ -1,0 +1,77 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";  
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    position: relative;
+    min-width: 100px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    gap: $medium_number;
+
+    .icon{
+        color: $primary;
+    }
+
+    p{
+        flex: 1;
+        font-family: $font;
+        font-size: $prefered_font_size;
+        text-transform: capitalize;
+    }
+
+    .toggle-icon{
+        width: $large_number;
+        font-size: $large_number - $medium_number;
+        color: $neutral;
+        cursor: pointer;
+    }    
+
+    .drop-box {
+        position: absolute;
+        display: flex;
+        width: 100%;
+        left: -100%;
+        opacity: 0;
+        pointer-events: none;
+        top: 110%;
+        flex-flow: column;
+        gap: $medium_number;
+        padding: $medium_number;
+        background-color: $white;
+        @include boxShadow();
+        border-radius: $medium_number;
+        transition: .3s ease;
+        z-index: 2;
+
+        &.active{
+            left: 0%;
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        li{
+            height: 30px;
+            display: flex;
+            gap: $medium_number;
+            align-items: center;
+            border-radius: $small_number;
+            padding: 0 $medium_number;
+            cursor: pointer;
+            transition: .3s;
+
+            app-icon{
+                color: $primary;
+            }
+
+            p{
+                flex: 1;
+            }
+
+            &:hover{
+                background-color: transparentize($color: $neutral, $amount: .7);
+            }
+        }
+    }
+}

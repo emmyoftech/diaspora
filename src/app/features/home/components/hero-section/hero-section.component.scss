@@ -1,0 +1,60 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+
+:host{
+    display: flex;
+    gap: $medium_number;
+
+    section{
+        flex: 1;
+        
+        &:nth-child(1){
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            gap: $medium_number;
+            font-family: $font;
+
+            h1{
+                font-size: $large_number * 2;
+                max-width: 520px;
+            }
+
+            p{
+                max-width: 400px;
+            }
+
+            button{
+                width: 130px;
+                height: 35px;
+                @include primaryButtonStyle;
+            }
+        }
+
+        &:nth-child(2){
+            @include cutImageBannerContainer;  
+        }
+    }
+
+    @media (max-width: 900px) {
+        flex-flow: column-reverse;
+
+        section{
+            &:nth-child(2){
+                flex: 2;
+            }
+            &:nth-child(1){
+                flex: 1;
+                align-items: center;
+
+                h1, p{
+                    text-align: center;
+                }
+
+                h1{
+                    font-size: $large_number;
+                }
+            }
+        }
+    }
+}

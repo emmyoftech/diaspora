@@ -1,0 +1,67 @@
+@import "/src/assets/partial-styles/fonts-varibles";
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+
+:host{
+    display: flex;
+    flex-flow: column;
+    gap: $large_number;
+
+    h1{
+        font-family: $font;
+    }
+
+    & > div{
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        flex-wrap: wrap;
+        gap: $medium_number;
+
+        p{
+            width: 50%;
+            max-width: 700px;
+            min-width: 300px;
+            font-family: $font;
+            color: $neutral;
+            font-size: $prefered_font_size;
+        }
+
+        button{
+            $bg: transparentize($color: $neutral, $amount: .7);
+            @include primaryButtonStyle($bg, $black);
+            padding: $medium_number $large_number;
+        }
+    }
+
+    & > section {
+        display: flex;
+        min-height: 300px;
+        gap: $large_number;
+        flex-wrap: wrap;
+
+        div{
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-flow: column;
+            gap: $medium_number;
+            font-family: $font;
+            padding: $large_number;
+
+            app-image-handler{
+                width: 80px;
+            }
+
+            ul{
+                display: flex;
+                flex-flow: column;
+                gap: $medium_number;
+
+                li{
+                    font-size: $prefered_font_size;
+                }
+            }
+        }
+    }   
+}

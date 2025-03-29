@@ -1,0 +1,15 @@
+@import "/src/assets/partial-styles/variables";
+
+:host{
+    background-color: $other_pallet_blue;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+
+    div{
+        width: 300%;
+        height: 300%;
+        border: solid 1px;
+        background: radial-gradient(circle closest-side at center, $white, $other_pallet_blue);
+    }
+}

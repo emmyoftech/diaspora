@@ -1,13 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-image-handler',
   standalone: true,
+  imports: [
+    CommonModule
+  ],
   template: `
-    <img [src]="src">
+    <img [src]="src" [ngStyle]="{objectFit: fit ?? 'cover'}">
   `,
   styles: [`
       :host{
+        border: none;
+        outline: none;
         overflow: hidden;
         
         img{
@@ -21,4 +27,7 @@ import { Component, Input } from '@angular/core';
 export class ImageHandlerComponent {
   @Input()
   src?: string
+
+  @Input()
+  fit?: "contain" | "cover"
 }

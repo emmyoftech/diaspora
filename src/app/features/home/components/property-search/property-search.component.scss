@@ -1,0 +1,102 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    min-height: 100px;
+    display: flex;
+    flex-flow: column;
+    container-type: inline-size;
+
+    
+    & > ul{
+        width: clamp(100px, 100%, 400px);
+        height: 40px;
+        display: flex;
+
+        li{
+            flex: 1;
+            list-style: none;
+            font-size: $prefered_font_size;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $medium_number;
+            border-radius: $medium_number $medium_number 0px 0px;
+
+            p{
+                font-family: $font;
+            }
+
+            &.active{
+                background-color: $white;
+            }
+        }
+    }
+
+    section{
+        display: flex;
+        min-height: 100px;
+        align-items: center;
+        gap: $large_number;
+        background-color: $white;
+        @include boxShadow();
+        padding: 0 $large_number;
+        padding: $medium_number;
+        border-radius: 0px $medium_number $medium_number $medium_number;
+
+        ul{
+            flex: 10;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: $medium_number;
+
+            li{
+                display: flex;
+                flex-flow: column;
+                gap: $medium_number;
+
+                p{
+                    color: $neutral;
+                    text-transform: capitalize;
+                    font-family: $font;
+                    font-size: $prefered_font_size;
+                }
+            }
+        }
+
+        button{
+            flex: 1;
+            min-width: 100px;
+            padding: $medium_number $large_number;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: $medium_number;
+            @include primaryButtonStyle;
+        }
+    }
+
+    @container (max-width: 700px){
+        section ul{
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @container (max-width: 600px){
+        section ul{
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @container (max-width: 500px){
+        section {
+            flex-flow: column;
+            align-items: stretch;
+
+            ul{
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}
