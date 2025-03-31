@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, inject, Input, NO_ERRORS_SCHEMA, OnDestroy, QueryList, Renderer2, TemplateRef, viewChild, ViewChild, viewChildren, ViewChildren, ViewContainerRef } from '@angular/core';
-import { JQuerySlickOptions, SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
+import { SlickCarouselComponent, SlickCarouselModule } from 'ngx-slick-carousel';
 import { setSizeToMatch } from 'src/app/functions/set-size-to-match.func';
 import { observeResize } from 'src/app/functions/observe-resize.func';
 import { Subscription } from 'rxjs';
 import CarouselSlideFeature from '../../interfaces/carousel-slide-feature.inter';
+import { JQuerySlickOptions } from 'ngx-slick-options';
 
 @Component({
   selector: 'app-ngx-carousel',

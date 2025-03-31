@@ -42,12 +42,7 @@
                         padding: 3px;
 
                         app-icon{
-                            width: $medium_number + $small_number;
-                            height: $medium_number + $small_number;
-                            font-size: $medium_number - 4;
-                            border-radius: 50%;
-                            background-color: $primary;
-                            color: $white;
+                            @include listBullet;
                         }
                     }
 
@@ -67,10 +62,7 @@
             }
 
             button{
-                width: 100%;
-                @include primaryButtonStyle;
-                padding: $medium_number $large_number;
-                max-width: 150px;
+                @include homePageExpandingButton;
             }
         }
     }

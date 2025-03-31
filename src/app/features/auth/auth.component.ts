@@ -5,8 +5,9 @@ import { LogInComponent } from "./components/log-in/log-in.component";
 import { SignUpComponent } from "./components/sign-up/sign-up.component";
 import { RouterModule } from '@angular/router';
 import { AUTH_SWIPER_CAROUSEL_CONFIGURATION } from './config/auth-swiper-settings.config';
-import { JQuerySlickOptions, SlickCarouselComponent } from 'ngx-slick-carousel';
+import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { NGXCarouselComponent } from '../shared/components/ngx-carousel/ngx-carousel.component';
+import { JQuerySlickOptions } from 'ngx-slick-options';
 
 @Component({
     selector: 'app-auth',

@@ -73,7 +73,7 @@
             justify-content: center;
             align-items: center;
             gap: $medium_number;
-            @include primaryButtonStyle;
+            @include homePageExpandingButton;
         }
     }
 

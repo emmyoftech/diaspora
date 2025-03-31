@@ -6,20 +6,11 @@
     justify-content: center;
     overflow-x: hidden;
 
-    app-blue-background-decorator {
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1;
-        top: 0;
-        left: 0;
-    }
-
     main{
         width: 95%;
         display: flex;
         flex-flow: column;
-        max-width: 1200px;
+        max-width: 1000px;
         height: max-content;
         padding-top: $medium_number;
         z-index: 2;

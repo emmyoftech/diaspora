@@ -1,0 +1,40 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/fonts-varibles";
+@import "/src/assets/partial-styles/mixins";
+
+:host{
+    display: flex;
+    flex-flow: column;
+    font-family: $font;
+    gap: $large_number;
+
+    & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: $large_number;
+
+        p{
+            max-width: 500px;
+            color: $neutral;
+            font-size: $prefered_font_size;
+        }
+
+        button{
+            min-width: 150px;
+            @include primaryButtonStyle($light_neutral, $black);
+            padding: $medium_number $large_number;
+        }
+    }
+
+    section{
+        display: flex;
+        flex-wrap: wrap;
+        gap: $large_number * 2;
+
+        app-mini-project-view{
+            flex: 1;
+        }
+    }
+}

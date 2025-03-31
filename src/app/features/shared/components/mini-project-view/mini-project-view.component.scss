@@ -1,0 +1,52 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/fonts-varibles";
+@import "/src/assets/partial-styles/mixins";
+
+:host{
+    display: flex;
+    flex-flow: column;
+    min-height: 250px;
+    border-radius: $large_number;
+    overflow: hidden;
+    gap: $medium_number;
+    @include boxShadow(.9);
+
+    app-image-handler, .info-holder{
+        flex: 1;
+    }
+
+    app-image-handler{
+        max-height: 220px;
+    }
+    
+    .info-holder{
+        font-family: $font;
+        padding: $medium_number;
+        height: max-content;
+        display: flex;
+        flex-flow: column;
+        gap: $medium_number;
+
+        h4{
+            text-transform: capitalize;
+        }
+
+        p{
+            font-size: $prefered_font_size;
+            color: $neutral;
+        }
+
+        ul{
+            display: flex;
+            gap: $large_number;
+            padding: $medium_number;
+
+            li{
+                list-style: none;
+                flex: 1;
+                font-size: $prefered_font_size;
+                text-transform: capitalize;
+            }
+        }        
+    }    
+}

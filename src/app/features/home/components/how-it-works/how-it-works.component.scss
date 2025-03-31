@@ -38,12 +38,7 @@
                         padding-top: 3px;
 
                         app-icon{
-                            font-size: $small_number + 1;
-                            width: $medium_number + $small_number;
-                            height: $medium_number + $small_number;
-                            color: $white;
-                            background-color: $primary;
-                            border-radius: 50%;
+                            @include listBullet;
                         }
                     }
 

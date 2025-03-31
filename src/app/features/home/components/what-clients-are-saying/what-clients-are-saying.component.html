@@ -1,0 +1,21 @@
+<h1>What our clients are saying</h1>
+
+<section>
+    @for (item of users; track $index) {
+        <div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas id sapiente voluptas explicabo est, similique numquam autem quam fugiat? Alias.</p>
+
+            <div>
+                <div>
+                    <app-image-handler></app-image-handler>
+                </div>
+
+                <p>{{item.firstName}}</p>
+                
+                <p>{{item.lastName}}</p>
+                
+                <i>{{item.location}}</i>
+            </div>
+        </div>
+    }
+</section>

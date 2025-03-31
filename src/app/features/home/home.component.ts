@@ -7,17 +7,20 @@ import gsap from 'gsap';
 import { KeyServicesComponent } from "./components/key-services/key-services.component";
 import { WhatWeOfferComponent } from "./components/what-we-offer/what-we-offer.component";
 import { HowItWorksComponent } from "./components/how-it-works/how-it-works.component";
+import { PreviousProjectsComponent } from "./components/previous-projects/previous-projects.component";
+import { WhatClientsAreSayingComponent } from "./components/what-clients-are-saying/what-clients-are-saying.component";
 
 @Component({
   selector: 'app-home',
   imports: [
     NavigatorComponent,
-    BlueBackgroundDecoratorComponent,
     HeroSectionComponent,
     PropertySearchComponent,
     KeyServicesComponent,
     WhatWeOfferComponent,
-    HowItWorksComponent
+    HowItWorksComponent,
+    PreviousProjectsComponent,
+    WhatClientsAreSayingComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

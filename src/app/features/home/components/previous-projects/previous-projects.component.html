@@ -1,0 +1,13 @@
+<h1>Previous Projects</h1>
+
+<div>
+    <p>Take a look at some of the properties we’ve successfully managed for Nigerians in the diaspora. Our expert team handles everything, from property listings to tenant management, ensuring peace of mind for property owners.</p>
+
+    <button>See all</button>
+</div>
+
+<section>
+    @for (item of projects; track $index) {
+        <app-mini-project-view [project]="item"></app-mini-project-view>
+    }
+</section>

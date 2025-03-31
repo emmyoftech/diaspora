@@ -19,17 +19,15 @@
         gap: $medium_number;
 
         p{
-            width: 50%;
-            max-width: 700px;
-            min-width: 300px;
+            max-width: 500px;
             font-family: $font;
             color: $neutral;
             font-size: $prefered_font_size;
         }
 
         button{
-            $bg: transparentize($color: $neutral, $amount: .7);
-            @include primaryButtonStyle($bg, $black);
+            min-width: 150px;
+            @include primaryButtonStyle($light_neutral, $black);
             padding: $medium_number $large_number;
         }
     }

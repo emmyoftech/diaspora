@@ -12,7 +12,6 @@
 
     & > app-image-handler, aside app-image-handler {
         width: 120px;
-        @include imageShadow();
         cursor: pointer;
     }
 
@@ -46,7 +45,6 @@
                 font-family: $font;
                 text-transform: capitalize;
                 font-size: $prefered_font_size;
-                @include textShadow();
             }
 
             &:hover{
@@ -89,13 +87,10 @@
 
             &:nth-child(1){
                 font-weight: bold;
-                @include textShadow()
             }
 
             &:nth-child(2){
-                background-color: $primary;
-                color: $white;
-                @include boxShadow(.9)
+                @include primaryButtonStyle;
             }
         }
     }
@@ -149,7 +144,6 @@
                     font-size: $medium_number + 7;
                     font-family: $font;
                     text-transform: capitalize;
-                    @include textShadow();
                 }
 
                 span{
@@ -182,14 +176,8 @@
                 border: none;
                 cursor: pointer;
 
-                &:nth-child(1){
-                    @include textShadow();
-                }
-
                 &:nth-child(2){
-                    @include boxShadow();
-                    background-color: $primary;
-                    color: $white;
+                    @include primaryButtonStyle;
                 }
             }
         }

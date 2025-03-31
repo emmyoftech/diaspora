@@ -5,14 +5,6 @@
     box-shadow: $small_number $small_number $small_number transparentize($color: $black, $amount: $opacity);
 }
 
-@mixin imageShadow($opacity: .7){
-    filter : drop-shadow($small_number $small_number $small_number transparentize($color: $black, $amount: $opacity))
-}
-
-@mixin textShadow($opacity: .7){
-    text-shadow: $small_number $small_number $small_number transparentize($color: $black, $amount: $opacity);
-}
-
 @mixin primaryButtonStyle($bg: $primary, $color: $white) {
     background-color: $bg;
     border-radius: $large_number;
@@ -26,11 +18,11 @@
     border-radius: 50% 50% $small_number $small_number;
 }
 
-@mixin cutImageBannerContainer {
+@mixin cutImageBannerContainer($resMinHeight: 450px) {
     display: grid;
     place-items: center;
 
-    app-image-handler{
+    app-image-handler {
         width: 80%;
         height: 90%;
         min-width: 400px;
@@ -38,9 +30,27 @@
         min-height: 500px;
 
         @media (max-width: 600px) {
-            width: 100%;
-            min-width: 300px;
-            min-height: 450px;
+            app-image-handler{
+                width: 100%;
+                min-width: 300px;
+                min-height: $resMinHeight;
+            }
         }
     }
+}
+
+@mixin homePageExpandingButton {
+    width: 100%;
+    @include primaryButtonStyle;
+    padding: $medium_number $large_number;
+    max-width: 150px;
+}
+
+@mixin listBullet {
+    font-size: $small_number + 1;
+    width: $medium_number + $small_number;
+    height: $medium_number + $small_number;
+    color: $white;
+    background-color: $primary;
+    border-radius: 50%;
 }
