@@ -9,6 +9,8 @@ import { WhatWeOfferComponent } from "./components/what-we-offer/what-we-offer.c
 import { HowItWorksComponent } from "./components/how-it-works/how-it-works.component";
 import { PreviousProjectsComponent } from "./components/previous-projects/previous-projects.component";
 import { WhatClientsAreSayingComponent } from "./components/what-clients-are-saying/what-clients-are-saying.component";
+import { SubcribeComponent } from "../shared/components/subcribe/subcribe.component";
+import { FooterComponent } from "../shared/components/footer/footer.component";
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,9 @@ import { WhatClientsAreSayingComponent } from "./components/what-clients-are-say
     WhatWeOfferComponent,
     HowItWorksComponent,
     PreviousProjectsComponent,
-    WhatClientsAreSayingComponent
+    WhatClientsAreSayingComponent,
+    SubcribeComponent,
+    FooterComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

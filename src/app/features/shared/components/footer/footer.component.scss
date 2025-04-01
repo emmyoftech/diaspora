@@ -1,0 +1,120 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    min-height: 300px;
+    display: flex;
+    flex-flow: column;
+    gap: $large_number;
+    font-family: $font;
+
+    h3{
+        text-transform: uppercase;
+    }
+
+    section{
+        flex: 1;
+        display: flex;
+        gap: $large_number;
+        flex-wrap: wrap;
+
+        .footer-banner, .footer-form{
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .footer-banner{
+            display: flex;
+            flex-flow: column;
+            gap: $large_number;
+
+            app-image-handler{
+                width: 140px;
+            }
+
+            div{
+                display: flex;
+                flex-flow: column;
+                gap: $small_number;
+
+                p{
+                    font-size: $prefered_font_size;
+                }
+            }
+        }
+
+        .footer-links{
+            flex: 1;
+            display: flex;
+            flex-flow: column;
+            gap: $medium_number;
+            min-width: 180px;
+
+            ul{
+                display: flex;
+                flex-flow: column;
+                gap: $small_number;
+
+                li{
+                    list-style: none;
+                    text-transform: capitalize;
+                }
+            }
+        }
+
+        .footer-form{
+            display: flex;
+            flex-flow: column;
+            gap: $medium_number;
+
+            div{
+                display: flex;
+                gap: $medium_number;
+            }
+
+            form{
+                display: flex;
+                height: 40px;
+                gap: $medium_number;
+
+                input{
+                    &[type="email"]{
+                        flex: 3;
+                        border: solid $neutral 1px;
+                        border-radius: $small_number;
+                        outline: none;
+                        padding-left: $medium_number;
+
+                        &::placeholder{
+                            font-family: $font;
+                        }
+                    }
+
+                    &[type="submit"]{
+                        flex: 1;
+                        min-width: 110px;
+                        @include primaryButtonStyle;
+                        border-radius: $small_number;
+                    }
+
+                }
+            }
+        }
+    }
+
+    footer{
+        height: $large_number * 2;
+        display: flex;
+        justify-content: space-between;
+
+        p{
+            font-size: $prefered_font_size;
+        }
+
+        div{
+            display: flex;
+            gap: $small_number;
+        }
+    }
+}

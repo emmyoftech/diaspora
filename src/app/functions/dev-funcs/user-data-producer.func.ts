@@ -7,13 +7,13 @@ export function userProducer(amount: number){
     for (let i = 0; i < amount; i++) {
         users.push({
             email: "emmanuelbowofoluwa@gmail.com",
-            firstName: "emmanuel",
-            lastName: "lasisi",
+            firstName: "moses",
+            lastName: "afro",
             phone: "906057393",
             phoneCode: "234",
             roleId: "0",
-            imageUrl: randomFrom(["user-1", "user-2"]),
-            location: randomFrom(["london, uk", "new york, usa"])
+            imageUrl: randomFrom(["user-1.png", "user-2.png"]),
+            location: randomFrom(["london, UK", "new york, USA"])
 
         })
     }

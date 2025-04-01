@@ -1,6 +1,15 @@
 @import "./variables";
 @import "./fonts-varibles";
 
+@mixin routeMaincomponentStyle {
+    width: 95%;
+    display: flex;
+    flex-flow: column; 
+    max-width: 1000px;
+    height: max-content;
+    padding-top: $medium_number;
+}
+
 @mixin boxShadow($opacity: .7){
     box-shadow: $small_number $small_number $small_number transparentize($color: $black, $amount: $opacity);
 }
@@ -18,24 +27,17 @@
     border-radius: 50% 50% $small_number $small_number;
 }
 
-@mixin cutImageBannerContainer($resMinHeight: 450px) {
+@mixin cutImageBannerContainer($minHeight: 450px) {
     display: grid;
     place-items: center;
 
     app-image-handler {
         width: 80%;
         height: 90%;
-        min-width: 400px;
+        min-width: 350px;
         @include imageTopCut;
-        min-height: 500px;
-
-        @media (max-width: 600px) {
-            app-image-handler{
-                width: 100%;
-                min-width: 300px;
-                min-height: $resMinHeight;
-            }
-        }
+        min-height: $minHeight;
+        max-height: 450px;
     }
 }
 

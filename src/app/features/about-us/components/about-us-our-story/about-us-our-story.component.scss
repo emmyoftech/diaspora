@@ -1,0 +1,27 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+
+:host{
+    height: 400px;
+    display: flex;
+    border-radius: $large_number;
+    overflow: hidden;
+    background-color: $other_pallet_light_blue;
+
+    & > section, app-image-handler{
+        display: flex;
+        flex: 1;
+    }
+
+    & > section{
+        justify-content: center;
+        align-items: center;
+
+        div{
+            width: 90%;
+            height: 90%;
+            background-color: $white;
+            border-radius: $large_number;
+        }
+    }
+}

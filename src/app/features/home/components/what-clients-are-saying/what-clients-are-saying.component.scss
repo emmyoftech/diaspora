@@ -7,11 +7,12 @@
     font-family: $font;
     gap: $large_number;
 
-    section{
+    .carousel{
         display: flex;
+        height: 300px;
 
-        div {
-            flex: 1;
+        .testimonial {
+            min-width: 300px;
             display: flex;
             flex-flow: column;
             gap: $medium_number;
@@ -19,19 +20,51 @@
             border-radius: $large_number;
             background-color: $light_neutral;
 
-            div{
-                display: grid;
-                grid-template-columns: 70px 1fr;
-                grid-template-rows: 1fr 1fr 1fr;
+            & > app-image-handler {
+                width: 30px;
+            }
 
-                div{
+            & > div{
+                display: grid;
+                grid-template-columns: 40px 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
+                column-gap: $large_number;
+
+                & > div{
                     grid-column: 1 / 2;
                     grid-row: 1 / -1;
+                    display: grid;
+                    place-items: center;
+
+                    app-image-handler{
+                        display: block;
+                        width: 50px;
+                    }
                 }
 
-                p, i{
+                b, p{
                     grid-column: 2 / -1;
+                    font-size: $prefered_font_size;
+                    text-transform: capitalize;
                 }
+            }
+        }
+    }
+
+    .dots{
+        display: flex;
+        gap: $medium_number;
+        align-self: center;
+
+        span{
+            width: 15px;
+            height: 15px;
+            background-color: $light_neutral;
+            display: block;
+            border-radius: 50%;
+
+            &.active{
+                background-color: $primary;
             }
         }
     }
