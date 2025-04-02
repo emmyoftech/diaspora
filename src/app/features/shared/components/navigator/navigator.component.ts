@@ -38,7 +38,7 @@ import { IconComponent } from "../icon/icon.component";
             </li>
 
           }@else {
-            <li [routerLink]="item.routeKey" [ngClass]="{active: ifActive(item)}">
+            <li [routerLink]=" '/' + item.routeKey" [ngClass]="{active: ifActive(item)}">
               <p>{{item.routeName}}</p>
             </li>
           }

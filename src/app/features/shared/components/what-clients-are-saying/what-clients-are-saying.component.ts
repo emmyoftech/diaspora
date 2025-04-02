@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { userProducer } from 'src/app/functions/dev-funcs/user-data-producer.func';
-import { ImageHandlerComponent } from "../../../shared/components/image-handler/image-handler.component";
-import { SwiperComponent } from "../../../shared/components/swiper/swiper.component";
+import { ImageHandlerComponent } from "../image-handler/image-handler.component";
+import { SwiperComponent } from "../swiper/swiper.component";
 import { SwiperOptions } from 'swiper/types';
 
 @Component({

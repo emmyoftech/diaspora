@@ -1,0 +1,48 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: $font;
+    gap: $large_number;
+
+    section{
+        flex: 1;
+        min-width: 350px;
+
+        &:nth-child(1){
+            display: flex;
+            flex-flow: column;
+            gap: $large_number;
+            container-type: inline-size;
+
+            ul{
+                display: grid;
+                gap: $large_number;
+                grid-template-columns: repeat(3, 1fr);
+
+
+                li{
+                    list-style: none;
+
+                    p{
+                        font-size: $prefered_font_size;
+                    }
+                }
+            }
+
+            @container (max-width: 400px){
+                ul{
+                    grid-template-columns: 1fr;
+                }
+            }
+        }
+
+        &:nth-child(2){
+            @include cutImageBannerContainer;
+        }
+    }
+}

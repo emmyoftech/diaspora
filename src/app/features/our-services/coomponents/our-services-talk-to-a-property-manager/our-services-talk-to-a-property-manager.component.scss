@@ -1,0 +1,44 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    display: flex;
+    font-family: $font;
+    flex-wrap: wrap;
+    gap: $large_number + $medium_number;
+    align-items: center;
+
+    section {
+        flex: 1;
+        min-width: 350px;
+
+        &:nth-child(1){
+            @include cutImageBannerContainer;
+        }
+
+        &:nth-child(2){
+            display: flex;
+            flex-flow: column;
+            gap: $medium_number;
+
+            h2, p{
+                max-width: 350px;
+            }
+
+            p{
+                font-size: $prefered_font_size;
+            }
+
+            button{
+                margin-top: $large_number;
+                width: max-content;
+                @include primaryButtonStyle;
+                display: flex;
+                padding: $medium_number $large_number;
+                justify-content: center;
+                gap: $medium_number;
+            }
+        }
+    }
+}

@@ -1,27 +1,53 @@
 @import "/src/assets/partial-styles/variables";
 @import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
 
 :host{
-    height: 400px;
+    height: max-content;
     display: flex;
-    border-radius: $large_number;
-    overflow: hidden;
+    flex-wrap: wrap;
+    border-radius: $large_number; 
     background-color: $other_pallet_light_blue;
 
     & > section, app-image-handler{
         display: flex;
         flex: 1;
+        min-width: 350px;
     }
 
     & > section{
         justify-content: center;
         align-items: center;
+        padding: $large_number;
 
-        div{
-            width: 90%;
-            height: 90%;
+        & > div{
+            display: flex;
+            flex-flow: column;
+            justify-content: space-between;
             background-color: $white;
             border-radius: $large_number;
+            font-family: $font;
+            padding: $large_number;
+            gap: $large_number * 2;
+
+            div{
+                display: inherit;
+                flex-flow: column;
+                gap: $medium_number;
+
+                p{
+                    font-size: $prefered_font_size;
+                }
+            }
+
+            button{
+                @include primaryButtonStyle;
+                display: flex;
+                justify-content: center;
+                gap: $medium_number;
+                padding: $medium_number $large_number;
+                max-width: 150px;
+            }
         }
     }
 }

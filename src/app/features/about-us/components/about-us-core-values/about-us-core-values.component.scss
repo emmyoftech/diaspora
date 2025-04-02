@@ -1,0 +1,45 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    display: flex;
+    flex-flow: column;
+    gap: $large_number * 2;
+    font-family: $font;
+
+    ul{
+        display: grid;
+        gap: $large_number;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto;
+
+        li{
+            list-style: none;
+            display: flex;
+            flex-flow: column;
+            border-radius: $large_number;
+            @include boxShadow(.9);
+            padding: $large_number;
+            gap: $large_number;
+
+            app-image-handler{
+                width: 60px;
+                height: 60px;
+            }
+
+            p{
+                font-size: $prefered_font_size;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
+
+    }
+}

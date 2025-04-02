@@ -1,0 +1,89 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    display: flex;
+    gap: $large_number;
+    font-family: $font;
+    align-items: center;
+    flex-wrap: wrap;
+
+    section{
+        flex: 1;
+        min-width: 350px;
+
+        &:nth-child(1){
+            display: flex;
+            flex-flow: column;
+            gap: $large_number;
+
+            ul{
+                display: flex;
+                flex-flow: column;
+                gap: $medium_number;
+
+                li{
+                    display: grid;
+                    grid-template-columns: 40px 1fr;
+                    grid-template-rows: auto auto;
+                    gap: $medium_number;
+
+                    div{
+                        grid-row: 1 / -1;
+                        grid-column: 1 / 2;
+
+                        span{
+                            display: grid;
+                            width: 25px;
+                            height: 25px;
+                            border-radius: 50%;
+                            background-color: $blueish_white;
+                            color: $primary;
+                            font-family: $font_bold;
+                            place-items: center;
+                        }
+                    }
+
+                    h4, p{
+                        grid-column: 2 / -1;
+                        max-width: 300px;
+                    }
+
+                    h4{
+                        grid-row: 1 / 2;
+                    }
+
+                    p{
+                        grid-row: 2 / -1;
+                        font-size: $prefered_font_size;
+                    }
+                }
+            }
+
+            button{
+                @include primaryButtonStyle;
+                max-width: 150px;
+                padding: $medium_number $large_number;
+                border-radius: $small_number;
+            }
+
+
+            @media (max-width: 400px) {
+                button{
+                    max-width: none;
+                    border-radius: $large_number;
+                }
+            }
+        }
+
+        &:nth-child(2){
+            @include cutImageBannerContainer;
+        }
+
+    }
+
+    @media (max-width: 750px) {
+        flex-flow: column-reverse;
+    }
+}

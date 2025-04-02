@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IconComponent } from "../../../shared/components/icon/icon.component";
-import { SelectDropdownComponent } from "../../../shared/components/select-dropdown/select-dropdown.component";
+import { IconComponent } from "../icon/icon.component";
+import { SelectDropdownComponent } from "../select-dropdown/select-dropdown.component";
 import { SelectDropObj } from 'src/app/features/shared/components/select-dropdown/select-dropdown.types';
 
 @Component({

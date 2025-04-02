@@ -1,0 +1,48 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    display: flex;
+    flex-flow: column;
+    gap: $medium_number;
+    font-family: $font;
+
+    & > p{
+        font-size: $prefered_font_size;
+        width: 50%;
+        min-width: 300px;
+    }
+
+    & > ul{
+        margin-top: $large_number;
+        display: flex;
+        flex-wrap: wrap;
+        gap: $large_number;
+
+        & > li{
+            flex: 1;
+            min-width: 300px;
+            list-style: none;
+            display: flex;
+            flex-flow: column;
+            gap: $medium_number;
+            padding: $large_number;
+            @include boxShadow(.9);
+            border-radius: $large_number;
+
+            app-image-handler {
+                width: 100px;
+            }
+
+            h3{
+                margin-top: $medium_number;
+            }
+
+            ul li{
+                list-style: disc;
+                font-size: $prefered_font_size;
+            }
+        }
+    }
+}

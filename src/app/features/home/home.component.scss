@@ -2,18 +2,10 @@
 @import "/src/assets/partial-styles/mixins";
 
 :host{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    overflow-x: hidden;
+    @include routeMaincomponentStyle(false);
 
     main{
-        @include routeMaincomponentStyle;
         z-index: 2;
-
-        app-hero-section{
-            height: 90vh;
-        }
 
         & > *:not(app-navigator):not(app-hero-section):not(app-property-search){
             margin: ($large_number * 2) 0;

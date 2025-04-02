@@ -4,7 +4,9 @@
 :host{
     position: relative;
     display: flex;
+    height: 90vh;
     gap: $medium_number;
+    margin: 0px 0px;
 
     app-blue-background-decorator {
         position: absolute;
