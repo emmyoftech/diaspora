@@ -1,0 +1,124 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    position: relative;
+    height: max-content;
+    font-family: $font;
+    display: flex;
+    flex-flow: column;
+    gap: $large_number * 2;
+
+    &::before{
+        content: '';
+        background-color: $blueish_white;
+        width: 100vw;
+        height: 100%;
+        z-index: -1;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    h1{
+        font-size: $medium_number * 5;
+        margin-top: $large_number * 2;
+    }
+
+    main{
+        display: flex;
+        margin-bottom: $large_number * 2;
+        gap: $large_number;
+        flex-wrap: wrap;
+
+        section, form{
+            flex: 1;
+            min-width: 300px;
+        }
+
+        
+        section {
+            display: flex;
+            flex-flow: column;
+            gap: $large_number;
+
+            & > div{
+                display: flex;
+                gap: $medium_number;
+                width: max-content;
+
+                div, ul{
+                    flex: 1;
+                }
+
+                div app-icon{
+                    color: $primary;
+                }
+
+                ul{
+                    list-style: none;
+                    display: flex;
+                    flex-flow: column;
+                    gap: $small_number;
+
+                    li{
+                        width: max-content;
+                        font-size: $prefered_font_size;
+                    }
+                }
+            }
+        }
+
+        form {
+            display: flex;
+            flex-flow: column;
+            gap: $large_number;
+
+            label{
+                background-color: $white;
+                border-radius: $small_number;
+                padding: $small_number;
+                display: flex;
+                @include boxShadow;
+
+                textarea, input{
+                    flex: 1;
+                    border: none;
+                    outline: none;
+
+                    &::placeholder{
+                        text-transform: capitalize;
+                        font-family: $font;
+                    }
+                }
+
+                input{
+                    height: 35px;
+                }
+
+                textarea{
+                    height: 120px;
+                    padding: $small_number;
+                    font-family: $font;
+                }
+            }
+
+            app-button-loaders{
+                border-radius: $large_number;
+                height: 35px;
+
+                input{
+                    @include primaryButtonStyle;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        h1{
+            font-size: $medium_number * 4;
+        }
+    }
+}

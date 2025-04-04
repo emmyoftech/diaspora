@@ -25,8 +25,6 @@ export class HttpService {
       parsedPath.concat(this.queryDresser(queryMaps))
     }
 
-    console.log(parsedPath)
-
     return {
       get: () => {
         return this.HTTP_cLIENT.get<T>(parsedPath)

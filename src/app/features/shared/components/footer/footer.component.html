@@ -1,7 +1,7 @@
 <section>
 
     <div class="footer-banner">
-        <app-image-handler fit="contain" src="assets/images/logo.png"></app-image-handler>
+        <app-image-handler routerLink="/" fit="contain" src="assets/images/logo.png"></app-image-handler>
     
         <div>
             <b>Address</b>
@@ -10,19 +10,19 @@
     </div>
 
     <div class="footer-links">
-        <h3>menu</h3>
+        <h5>menu</h5>
 
         <ul>
             <li>projects</li>
             <li>how it works</li>
             <li>resources & guides</li>
-            <li>about us</li>
+            <li routerLink="/about">about us</li>
             <li>contact us</li>
         </ul>
     </div>
 
     <div class="footer-links">
-        <h3>legal</h3>
+        <h5>legal</h5>
 
         <ul>
             <li>sitemap</li>
@@ -33,7 +33,7 @@
     </div>
     
     <div class="footer-form">
-        <h3>reach</h3>
+        <h5>reach</h5>
 
         <div>
             <app-icon name="envelope"></app-icon>

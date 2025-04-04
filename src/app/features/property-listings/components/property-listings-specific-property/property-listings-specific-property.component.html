@@ -1,0 +1,150 @@
+<main>
+    <app-navigator></app-navigator>
+
+    <section>
+        <header>
+            @for (item of Project.otherimageUrls; track $index) {
+                <app-image-handler [src]="'assets/images/property-images/' + item"></app-image-handler>
+            }
+        </header>
+
+        <section>
+
+            <div>
+                <header>
+                    <h1>{{Project.title}}</h1>
+                    <div>
+                        <app-icon name="heart" type="regular"></app-icon>
+                        <app-icon name="share-nodes"></app-icon>
+                    </div>
+                </header>
+
+                @if(Project.description.length <= maxTextLength){
+                    <p>{{Project.description}}</p>
+                }@else {
+
+                    @if(viewLongDeescription){
+                        <p>{{Project.description}} <span (click)="viewLongDeescription = false">See less</span></p>
+
+                    }@else {
+                        <p>{{Project.description | textShortner : maxTextLength}} <span (click)="viewLongDeescription = true">See more</span></p>
+                    }
+                }
+
+                <div class="key-facilities">
+                    <h4>Key Facilites</h4>
+
+                    <ul>
+                        <li>
+                            <app-icon name="wifi"></app-icon>
+                            <p>Wifi</p>
+                        </li>
+                        <li>
+                            <app-icon name="suitcase"></app-icon>
+                            <p>Luggage</p>
+                        </li>
+                        <li>
+                            <app-icon name="wifi"></app-icon>
+                            <p>Wifi</p>
+                        </li>
+                        <li>
+                            <app-icon name="tv"></app-icon>
+                            <p>TV</p>
+                        </li>
+                        <li>
+                            <app-icon name="tv"></app-icon>
+                            <p>TV</p>
+                        </li>
+                        <li>
+                            <app-icon name="bath"></app-icon>
+                            <p>Bathtub</p>
+                        </li>
+                        <li>
+                            <app-icon name="suitcase"></app-icon>
+                            <p>Luggage</p>
+                        </li>
+                        <li>
+                            <app-icon name="bath"></app-icon>
+                            <p>Bathtub</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="location">
+                    <h4>Location</h4>
+                    <app-image-handler src="assets/images/map.png"></app-image-handler>
+                </div>
+            </div>
+            
+            <div>
+                <header>
+                    <p>Price</p>
+                    <b>{{Project.price | currency : 'NGN' : 'symbol-narrow' : '1.0-0' }}</b>
+                </header>
+
+                <ul class="facilites">
+                    <li>
+                        <app-icon name="wifi"></app-icon>
+                        <p>3 bath</p>
+                    </li>
+
+                    <li>
+                        <app-icon name="wifi"></app-icon>
+                        <p>3 bath</p>
+                    </li>
+
+                    <li>
+                        <app-icon name="wifi"></app-icon>
+                        <p>3 bath</p>
+                    </li>
+                </ul>
+
+                <hr>
+
+                <section>
+                    <div class="agent-view">
+                        <div>
+                            <app-image-handler [src]="'assets/images/user-images/' + Project.agent.imageUrl"></app-image-handler>
+                        </div>
+
+                        <p>Agent</p>
+                        <b>{{Project.agent.firstName | titlecase}} {{Project.agent.lastName | titlecase}}</b>
+                    </div>
+
+                    <div class="call-actions">
+                        <button>
+                            <app-icon name="envelope"></app-icon>
+                            <p>Mail agent</p>
+                        </button>
+
+                        <button>
+                            <app-icon name="phone"></app-icon>
+                            <p>Call agent</p>
+                        </button> 
+                    </div>
+                </section>
+
+                <hr>
+
+                <div>
+                    <p>Property listed by</p>
+                    <b>CVSpan Limited</b>
+                </div>
+            </div>
+
+        </section>
+    </section>
+
+    <div class="similar">
+        <h1>Similar Listings</h1>
+
+        <div>
+            @for (item of projects; track $index) {
+                <app-mini-project-view [project]="item" [showContact]="true"></app-mini-project-view>
+            }
+        </div>
+            
+    </div>
+
+    <app-footer></app-footer>
+</main>

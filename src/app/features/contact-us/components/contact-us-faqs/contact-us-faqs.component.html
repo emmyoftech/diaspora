@@ -1,0 +1,43 @@
+<h1>Frequently Asked Question</h1>
+
+<p>DiasporaBuild is a trusted property management platform designed specifically for Nigerians living abroad. We provide secure, transparent, and hassle-free solutions for managing, building,</p>
+
+<ul>
+    @for (item of faq_groups; track $index) {
+
+        <li>
+            <section>
+                <b>{{item.group_name}}</b>
+            </section>
+    
+            <ul>
+
+                @for (subItem of item.units; track $index) {
+
+                    <li [ngClass]="{open: subItem.opened}">
+                        <div>
+                            <h4>{{subItem.question}}</h4>
+        
+                            @if(!subItem.opened){
+                                <app-icon (click)="subItem.opened = !subItem.opened" name="plus"></app-icon>
+                            }@else {
+                                <app-icon (click)="subItem.opened = !subItem.opened" name="minus"></app-icon>
+                            }
+                        </div>
+                        <div>
+                            @if(subItem.answer){
+                                <p>{{subItem.answer}}</p>
+                            }@else {
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta, blanditiis. Numquam officia commodi quisquam velit explicabo error. Praesentium dolore quaerat tempora nulla. Ipsum, maxime dignissimos?</p>
+                            }
+                        </div>
+                    </li>
+
+                }
+                
+            </ul>
+        </li>
+
+    }
+</ul>
+

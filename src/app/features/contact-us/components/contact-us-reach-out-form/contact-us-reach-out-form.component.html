@@ -1,0 +1,68 @@
+<h1>Reach out to us</h1>
+
+<main>
+    <section>
+        
+        <div>
+            <div>
+                <app-icon name="phone"></app-icon>
+            </div>
+            <ul>
+                <li>+234 012 345 678 90</li>
+                <li>+1 (234) 567-89-91</li>
+            </ul>
+        </div>
+
+        <div>
+            <div>
+                <app-icon name="envelope"></app-icon>
+            </div>
+            <ul>
+                <li>hi&#64;diasporabuild.com</li>
+            </ul>
+        </div>
+
+    </section>
+    
+    <form #form="ngForm" (ngSubmit)="submit()">
+        <label>
+            <input 
+                type="text" 
+                name="name" 
+                [(ngModel)]="message.name" 
+                placeholder="Enter name" 
+                required>
+        </label>
+        <label>
+            <input 
+                type="email" 
+                name="email" 
+                [(ngModel)]="message.email" 
+                [ngModelOptions]="{updateOn: 'change'}" 
+                appEmailFormatValidator 
+                placeholder="Enter email"
+                required
+            >
+        </label>
+        <label>
+            <textarea 
+                name="message" 
+                [(ngModel)]="message.message" 
+                placeholder="Enter message"
+                required
+            >
+            </textarea>
+        </label>
+
+        <app-button-loaders [loadObvs]="loadObvs">
+            <input 
+                type="submit" 
+                #loadTarget 
+                value="send" 
+                [disabled]="form.invalid"
+                [ngClass]="{disabled: form.invalid}"
+            >
+        </app-button-loaders>
+
+    </form>
+</main>

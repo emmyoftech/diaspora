@@ -1,13 +1,11 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { ImageHandlerComponent } from "../../../shared/components/image-handler/image-handler.component";
 import gsap from 'gsap';
-import { BlueBackgroundDecoratorComponent } from "../../../shared/components/blue-background-decorator/blue-background-decorator.component";
 
 @Component({
   selector: 'app-hero-section',
   imports: [
-    ImageHandlerComponent,
-    BlueBackgroundDecoratorComponent
+    ImageHandlerComponent
 ],
   templateUrl: './hero-section.component.html',
   styleUrl: './hero-section.component.scss'

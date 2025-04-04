@@ -1,0 +1,19 @@
+<main>
+    <app-navigator></app-navigator>
+
+    <header>
+        <h1>Explore our selection of properties</h1>
+        <p>DiasporaBuild is a trusted property management platform designed specifically for Nigerians living abroad. We provide secure, transparent, and hassle-free solutions for managing, building,</p>
+        <button>Get Started</button>
+    </header>
+
+    <app-property-search></app-property-search>
+
+    <section>
+        @for (item of properties; track $index) {
+            <app-mini-project-view [routerLink]="item.id + ''" [project]="item" [showContact]="true"></app-mini-project-view>
+        }
+    </section>
+
+    <app-footer></app-footer>
+</main>

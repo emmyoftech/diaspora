@@ -24,7 +24,8 @@ import { FooterComponent } from "../shared/components/footer/footer.component";
     PreviousProjectsComponent,
     WhatClientsAreSayingComponent,
     SubcribeComponent,
-    FooterComponent
+    FooterComponent,
+    BlueBackgroundDecoratorComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

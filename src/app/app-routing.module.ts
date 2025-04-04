@@ -5,6 +5,8 @@ import { HomeComponent } from './features/home/home.component';
 import { AboutUsComponent } from './features/about-us/about-us.component';
 import { OurServicesComponent } from './features/our-services/our-services.component';
 import { ContactUsComponent } from './features/contact-us/contact-us.component';
+import { PropertyListingsComponent } from './features/property-listings/property-listings.component';
+import { PropertyListingsSpecificPropertyComponent } from './features/property-listings/components/property-listings-specific-property/property-listings-specific-property.component';
 
 const routes: Routes = [
   {
@@ -29,11 +31,25 @@ const routes: Routes = [
   {
     path: "contact",
     component: ContactUsComponent
+  },
+
+  {
+    path: "property-list",
+    component: PropertyListingsComponent
+  },
+
+  {
+    path: "property-list/:propertyId",
+    component: PropertyListingsSpecificPropertyComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: "top"
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

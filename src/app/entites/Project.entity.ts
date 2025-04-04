@@ -1,8 +1,18 @@
-export type Project = {
+import { User } from "./User.entity"
+
+
+export type ProjectEntity = {
+    id?: number
     imageUrl: string,
     title: string,
     description: string,
     category: string,
     client: string,
-    date: Date
+    price: number,
+    date: Date,
+    otherimageUrls: string[]
+}
+
+export interface Project extends ProjectEntity {
+    agent: User
 }

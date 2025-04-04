@@ -5,9 +5,21 @@
     @include routeMaincomponentStyle(false);
 
     main{
+        position: relative;
         z-index: 2;
 
-        & > *:not(app-navigator):not(app-hero-section):not(app-property-search){
+        app-blue-background-decorator {
+            position: absolute;
+            width: 100vw;
+            height: 115vh;
+            z-index: -1;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    
+
+        & > *:not(app-navigator):not(app-hero-section):not(app-property-search):not(app-blue-background-decorator){
             margin: ($large_number * 2) 0;
         }
     }

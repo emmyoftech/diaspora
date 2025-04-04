@@ -1,0 +1,7 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+
+:host{
+    @include routeMaincomponentStyle;
+    
+}

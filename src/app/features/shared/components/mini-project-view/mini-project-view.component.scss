@@ -47,6 +47,25 @@
                 font-size: $prefered_font_size;
                 text-transform: capitalize;
             }
-        }        
+        }
+        
+        & > div{
+            display: flex;
+            gap: $medium_number;
+
+            button{
+                flex: 1;
+                display: flex;
+                @include primaryButtonStyle($light_neutral, $black);
+                justify-content: center;
+                height: 35px;
+                align-items: center;
+                gap: $medium_number;
+
+                p{
+                    color: $black;
+                }
+            }
+        }
     }    
 }

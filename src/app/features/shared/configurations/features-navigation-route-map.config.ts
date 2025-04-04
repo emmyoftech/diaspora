@@ -1,12 +1,8 @@
 import { InjectionToken } from "@angular/core";
-import { InjectionObject } from "../../../types/injection-object.type";
+import { InjectionObject } from "../types/injection-object.type";
+import { NavigationObject } from "../types/navigation-object.type";
 
-export type NavigationObject = {
-    routeName: string,
-    routeKey: string 
-}
-
-export const NAVIGATOR_ROUTE_MAP: InjectionObject<NavigationObject[]> = {
+export const FEATURES_NAVIGATOR_ROUTE_MAP: InjectionObject<NavigationObject[]> = {
     token: new InjectionToken("nav-key-map"),
 
     data: [

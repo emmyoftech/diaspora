@@ -1,0 +1,113 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    display: flex;
+    flex-flow: column;
+    gap: $medium_number;
+    font-family: $font;
+
+    h1{
+        font-size: $medium_number * 5;
+    }
+
+    p{
+        font-size: $prefered_font_size;
+        width: clamp(250px, 90%, 900px);
+    }
+
+    & > ul{
+        margin-top: $medium_number * 3;
+        display: flex;
+        flex-flow: column;
+        gap: $large_number * 2;
+
+        & > li{
+            display: flex;
+            gap: $large_number;
+            list-style: none;
+            flex-wrap: wrap;
+
+            section, ul{
+                flex: 1;
+                min-width: 340px;
+            } 
+
+            section{
+                color: $neutral;
+                font-size: $prefered_font_size;
+            }
+
+            ul{
+                display: inherit;
+                flex-flow: column;
+
+                li{
+                    display: flex;
+                    flex-flow: column;
+                    padding: $large_number;
+                    border-radius: $large_number;
+                    transition: .3s ease;
+                    @include boxShadow;
+
+                    &.open{
+                        background-color: $primary;
+                        color: $white;
+
+                        div:nth-child(1){
+                            app-icon{
+                                background-color: $white;
+                                color: $primary;
+                            }
+                        }
+
+                        div:nth-child(2){
+                            padding: $medium_number 0;
+                            grid-template-rows: 1fr;
+                        }
+                    }
+
+                    div{
+                        &:nth-child(1){
+                            display: flex;
+                            gap: $large_number;
+                            align-items: flex-start;
+
+                            h4{
+                                flex: 1;
+                            }
+
+                            app-icon{
+                                flex-shrink: 0;
+                                background-color: $primary;
+                                color: $white;
+                                width: $large_number;
+                                height: $large_number;
+                                border-radius: 50%;
+                                cursor: pointer;
+                            }
+                        }
+
+                        &:nth-child(2){
+                            display: grid;
+                            grid-template-rows: 0fr;
+                            transition: inherit;
+
+                            p{
+                                overflow: hidden;
+                                font-size: $prefered_font_size;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        h1{
+            font-size: $medium_number * 4;
+        }
+    }
+}

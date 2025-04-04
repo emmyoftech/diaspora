@@ -2,21 +2,9 @@
 @import "/src/assets/partial-styles/mixins";
 
 :host{
-    position: relative;
     display: flex;
     height: 90vh;
     gap: $medium_number;
-    margin: 0px 0px;
-
-    app-blue-background-decorator {
-        position: absolute;
-        width: 100vw;
-        height: 100%;
-        z-index: -1;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-    }
 
     section{
         z-index: 2;
@@ -26,7 +14,6 @@
     .hero-info{
         display: flex;
         flex-flow: column;
-        padding-top: $large_number * 2;
         gap: $medium_number;
         font-family: $font;
 
@@ -40,16 +27,16 @@
         }
 
         button{
-            width: 130px;
-            height: 35px;
+            padding: $medium_number $large_number;
             @include primaryButtonStyle;
+            width: 100%;
+            max-width: 150px;
         }
     }
 
     .hero-image{
-        @include cutImageBannerContainer(300px);
+        @include cutImageBannerContainer(350px);
     }
-
     
     @media (max-width: 900px) {
         flex-flow: column-reverse;
@@ -68,9 +55,11 @@
     }
 
     @media (max-width: 600px) {
-        .hero-image{
-            app-image-handler{
-                max-height: 320px;  
+        .hero-info{
+            padding-top: 0;
+
+            button{
+                max-width: none;
             }
         }
     }

@@ -21,8 +21,8 @@
     }
 }
 
-@mixin boxShadow($opacity: .7){
-    box-shadow: $small_number $small_number $small_number transparentize($color: $black, $amount: $opacity);
+@mixin boxShadow($opacity: .9, $spread: $small_number){
+    box-shadow: 4px 4px 42px 0px transparentize($color: $black, $amount: $opacity);
 }
 
 @mixin primaryButtonStyle($bg: $primary, $color: $white) {
@@ -38,17 +38,15 @@
     border-radius: 50% 50% $small_number $small_number;
 }
 
-@mixin cutImageBannerContainer($minHeight: 450px) {
+@mixin cutImageBannerContainer($minHeight: 400px) {
     display: grid;
     place-items: center;
 
     app-image-handler {
-        width: 80%;
-        height: 90%;
-        min-width: 350px;
+        width: clamp(300px, 80%, 400px);
+        height: clamp($minHeight, 90%, 450px);
         @include imageTopCut;
         min-height: $minHeight;
-        max-height: 450px;
     }
 }
 

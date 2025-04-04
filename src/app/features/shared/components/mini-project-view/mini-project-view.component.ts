@@ -1,23 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 import { Project } from 'src/app/entites/Project.entity';
 import { ImageHandlerComponent } from "../image-handler/image-handler.component";
 import { CommonModule } from '@angular/common';
 import { TextShortnerPipe } from '../../pipes/text-shortner.pipe';
+import { IconComponent } from "../icon/icon.component";
 
 @Component({
   selector: 'app-mini-project-view',
   imports: [
     CommonModule,
     ImageHandlerComponent,
-    TextShortnerPipe
-  ],
+    TextShortnerPipe,
+    IconComponent
+],
   template: `
     <app-image-handler [src]="'assets/images/property-images/' + project?.imageUrl"></app-image-handler>
 
     <section class="info-holder">
       <h4>{{project?.title}}</h4>
 
-      <p>{{project?.description}}</p>
+      <p>{{project?.description ?? 'unknown' | textShortner : 100}} </p>
 
       <ul>
         <li>
@@ -36,6 +38,18 @@ import { TextShortnerPipe } from '../../pipes/text-shortner.pipe';
         </li>
 
       </ul>
+
+      <div *ngIf="showContact">
+        <button>
+          <app-icon name="envelope"></app-icon>
+          <p>Email</p>
+        </button>
+        <button>
+          <app-icon name="phone"></app-icon>
+          <p>Call</p>
+        </button>
+        
+      </div>
     </section>
   `,
   styleUrl: './mini-project-view.component.scss'
@@ -43,4 +57,7 @@ import { TextShortnerPipe } from '../../pipes/text-shortner.pipe';
 export class MiniProjectViewComponent {
   @Input()
   project?: Project
+
+  @Input()
+  showContact?: boolean
 }
