@@ -1,0 +1,40 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+
+:host {
+    @include routeMaincomponentStyle;
+    font-family: $font;
+
+    section{
+        display: flex;
+        flex-flow: column;
+        gap: $large_number;
+
+        h1{
+            font-size: $medium_number * 5;
+        }
+
+        p{
+            font-size: $prefered_font_size;
+            color: $neutral;
+        }
+
+        ul{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: $large_number;
+            margin-top: $large_number;
+        }
+
+        @media (max-width: 650px) {
+
+            h1{
+                font-size: $medium_number * 3;
+            }
+            
+            ul{
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}

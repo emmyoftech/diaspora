@@ -1,6 +1,6 @@
 import { Component, inject, Inject } from '@angular/core';
 import { ImageHandlerComponent } from "../image-handler/image-handler.component";
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IconComponent } from "../icon/icon.component";
 import { FEATURES_NAVIGATOR_ROUTE_MAP } from '../../configurations/features-navigation-route-map.config';
@@ -98,7 +98,7 @@ import { NavigationObject } from '../../types/navigation-object.type';
 })
 export class NavigatorComponent {
 
-  private active_route = inject(ActivatedRoute)
+  private router = inject(Router)
 
   constructor(
     @Inject(FEATURES_NAVIGATOR_ROUTE_MAP.token) public navs: NavigationObject[]
@@ -109,13 +109,21 @@ export class NavigatorComponent {
   ifActive(navObj: NavigationObject){
     let result = false
 
-    const currentPath = this.active_route.snapshot.routeConfig?.path
+    const currentPaths = this.router.url.split("/").map(url => url.toLowerCase())
 
+    /**
+     * If its home route map key
+     */
     if(navObj.routeKey == "--"){
-      return !currentPath 
-    }
+      
+      /**
+       * checks if current route string lenght is less than zero, meaning we are at the base route
+       */
+      result = currentPaths.join("").length < 1
 
-    result = currentPath == navObj.routeKey
+    }else{
+      result = currentPaths.includes(navObj.routeKey)
+    }
 
     return result
   }

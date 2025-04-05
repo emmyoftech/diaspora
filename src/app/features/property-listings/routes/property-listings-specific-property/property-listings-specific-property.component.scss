@@ -67,6 +67,8 @@
                         }
 
                         & > p {
+                            font-size: $prefered_font_size;
+                            
                             span{
                                 color: $primary;
                                 font-weight: bold;

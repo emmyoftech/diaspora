@@ -65,3 +65,65 @@
     background-color: $primary;
     border-radius: 50%;
 }
+
+@mixin policyStyling {
+    display: flex;
+    flex-flow: column;
+    gap: $medium_number;
+    font-family: $font;
+
+    h1{
+        font-size: $medium_number * 5;
+    }
+
+    p{
+        color: $neutral;
+        font-size: $prefered_font_size;
+    }
+
+    & > div {
+        display: flex;
+        flex-flow: column;
+        gap: $large_number;
+
+        & > ul {
+            display: inherit;
+            flex-flow: inherit;
+            gap: $large_number;
+
+
+            & > li{
+                display: flex;
+                flex-flow: column;
+                gap: $medium_number;
+                list-style: none;
+
+                ul li {
+                    display: grid;
+                    grid-template-columns: $large_number 1fr;
+
+                    & > b {
+                        grid-row: 1 / -1;
+                        grid-column: 1 / 2;
+                    }
+
+                    p{
+                        grid-column: 2 / -1;
+
+                        b{
+                            color: $black;
+                            font-size: $medium_number + $small_number;
+                            margin-right: $small_number;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        h1{
+            font-size: $medium_number * 3;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+@import "/src/assets/partial-styles/variables";
+@import "/src/assets/partial-styles/mixins";
+@import "/src/assets/partial-styles/fonts-varibles";
+
+:host{
+    @include routeMaincomponentStyle;
+    font-family: $font;
+
+    main{
+
+        section {
+            @include policyStyling;
+        }
+
+    }
+}

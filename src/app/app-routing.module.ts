@@ -5,8 +5,11 @@ import { HomeComponent } from './features/home/home.component';
 import { AboutUsComponent } from './features/about-us/about-us.component';
 import { OurServicesComponent } from './features/our-services/our-services.component';
 import { ContactUsComponent } from './features/contact-us/contact-us.component';
-import { PropertyListingsComponent } from './features/property-listings/property-listings.component';
-import { PropertyListingsSpecificPropertyComponent } from './features/property-listings/components/property-listings-specific-property/property-listings-specific-property.component';
+import { BookAConsultationComponent } from './features/book-a-consultation/book-a-consultation.component';
+import { CookiesPolicyComponent } from './features/cookies-policy/cookies-policy.component';
+import { PrivacyPolicyComponent } from './features/privacy-policy/privacy-policy.component';
+import { TermsAndConditionComponent } from './features/terms-and-condition/terms-and-condition.component';
+import { PreviousProjectsComponent } from './features/previous-projects/previous-projects.component';
 
 const routes: Routes = [
   {
@@ -35,12 +38,33 @@ const routes: Routes = [
 
   {
     path: "property-list",
-    component: PropertyListingsComponent
+    loadChildren: () => import("./features/property-listings/property-liatings.module").then(m => m.PropertyLiatingsModule)
   },
 
   {
-    path: "property-list/:propertyId",
-    component: PropertyListingsSpecificPropertyComponent
+    path: 'projects',
+    loadChildren: () => import("./features/previous-projects/previous-projects.module").then(m => m.PreviousProjectsModule)
+
+  },
+
+  {
+    path: 'book-a-consultation',
+    component: BookAConsultationComponent
+  },
+
+  {
+    path: 'cookie-policy',
+    component: CookiesPolicyComponent
+  },
+
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
+  },
+
+  {
+    path: 'terms',
+    component: TermsAndConditionComponent
   }
 ];
 
